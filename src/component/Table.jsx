@@ -1,14 +1,15 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 export default function Table(props) {
     const { persons } = props;
+    const headerNames = ['ID', 'Title', 'Name', 'Email'];
+
   return (
     <>
-    <h1>Table</h1>
     <table>
         <thead>
             <tr>
-                <th>Table header</th>
+                {headerNames.map((headerName, i) => <th key={i}>{headerName}</th>)}
             </tr>
         </thead>
         <tbody>
@@ -16,7 +17,7 @@ export default function Table(props) {
             <tr id={person.id}>
                 <td>{person.id}</td>
                 <td>{person.title}</td>
-                <td>{person.firstName} + {person.lastName}</td>
+                <td>{`${person.firstName} ${person.lastName}`}</td>
                 <td>{person.email}</td>
             </tr>)}
         </tbody>

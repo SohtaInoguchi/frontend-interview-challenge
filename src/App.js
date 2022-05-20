@@ -22,8 +22,7 @@ function App() {
 
   return (
     <>
-      <h1>Hello world</h1>
-      <Table persons={persons}/>
+      {persons.length && <Table persons={persons}/>}
     </>
   );
 }
