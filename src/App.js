@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import Table from './component/Table';
 
 function App() {
   const [persons, setPersons] = useState([]);
@@ -22,6 +23,7 @@ function App() {
   return (
     <>
       <h1>Hello world</h1>
+      <Table persons={persons}/>
     </>
   );
 }
