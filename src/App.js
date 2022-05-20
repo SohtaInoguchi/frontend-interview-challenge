@@ -5,14 +5,25 @@ import { useState, useEffect } from 'react';
 import Table from './component/Table';
 
 function App() {
-  const [persons, setPersons] = useState([]);
+  const [persons, setPersons] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const fetchPersons = async () => {
     try {
       const response = await axios.get('http://localhost:3000/persons');
-      setPersons(response.data.results);      
+      console.log(response);
+      if (response.statusText !== 'OK') {
+        throw Error('Something went wrong...');
+      }
+      else {
+        setPersons(response.data.results);
+        setIsLoading(false);
+      }
     } catch (e) {
-      console.error(e);
+      setIsLoading(false);
+      console.error('Error occurred: ' + e);
+      setErrorMessage(e.message);
     }
   };
 
@@ -22,7 +33,10 @@ function App() {
 
   return (
     <>
-      {persons.length && <Table persons={persons}/>}
+      {errorMessage && <div>{errorMessage}</div>}
+      {/* {persons.length === 0 ? 'Loading data...' : <Table persons={persons}/>} */}
+      {isLoading && <div>Loading data...</div>}
+      {persons && <Table persons={persons}/>}
     </>
   );
 }
