@@ -1,24 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import Table from './component/Table';
 
 function App() {
+  const [persons, setPersons] = useState([]);
+
+  const fetchPersons = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/persons');
+      setPersons(response.data.results);      
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    fetchPersons();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {persons.length && <Table persons={persons}/>}
+    </>
   );
 }
 
