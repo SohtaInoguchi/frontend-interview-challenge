@@ -12,7 +12,6 @@ function App() {
   const fetchPersons = async () => {
     try {
       const response = await axios.get('http://localhost:3000/persons');
-      console.log(response);
       if (response.statusText !== 'OK') {
         throw Error('Something went wrong...');
       }
@@ -34,7 +33,6 @@ function App() {
   return (
     <>
       {errorMessage && <div>{errorMessage}</div>}
-      {/* {persons.length === 0 ? 'Loading data...' : <Table persons={persons}/>} */}
       {isLoading && <div>Loading data...</div>}
       {persons && <Table persons={persons}/>}
     </>
