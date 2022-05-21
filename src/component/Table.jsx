@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import allPersons from "../mocks/personsFixtures";
 import DetailModal from './DetailModal';
 
-
 export default function Table(props) {
-    const { persons } = props;
+    const { persons, setPersons } = props;
     const headerNames = ['ID', 'Title', 'Name', 'Email'];
     const [selectedPerson, setSelectedPerson] = useState({});
     const [isSelected, setIsSelected] = useState(false);
@@ -16,6 +14,7 @@ export default function Table(props) {
             const selectedUserId = e.currentTarget.id;
             const response = await axios.get(`http://localhost:3000/persons/${selectedUserId}`)
             setSelectedPerson(response.data);
+            console.log("selected", selectedPerson);
             setIsSelected(true);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
@@ -40,7 +39,13 @@ export default function Table(props) {
             </tr>)}
         </tbody>
     </table>
-    {isSelected && <DetailModal selectedPerson={selectedPerson}/>}
+    {isSelected && 
+    <DetailModal 
+        selectedPerson={selectedPerson} 
+        persons={persons} 
+        setPersons={setPersons}
+        setIsSelected={setIsSelected}
+        className={isSelected ? 'modal-show' : 'modal-hyde'}/>}
     </>
   )
 }

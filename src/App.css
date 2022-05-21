@@ -41,3 +41,12 @@
   color: gray;
   cursor: pointer;
 }
+
+.modal-show {
+  display: block;
+  position: fixed;
+}
+
+.modal-hyde {
+  display: none;
+}

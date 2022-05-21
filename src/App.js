@@ -34,7 +34,7 @@ function App() {
     <>
       {errorMessage && <div>{errorMessage}</div>}
       {isLoading && <div>Loading data...</div>}
-      {persons && <Table persons={persons}/>}
+      {persons && <Table persons={persons} setPersons={setPersons}/>}
     </>
   );
 }
