@@ -23,7 +23,7 @@ export default function Table(props) {
 
   return (
     <>
-    <table>
+    <table id='persons-table'>
         <thead>
             <tr>
                 {headerNames.map((headerName, i) => <th key={i}>{headerName}</th>)}
@@ -45,7 +45,7 @@ export default function Table(props) {
         persons={persons} 
         setPersons={setPersons}
         setIsSelected={setIsSelected}
-        className={isSelected ? 'modal-show' : 'modal-hyde'}/>}
+        isSelected={isSelected}/>}
     </>
   )
 }

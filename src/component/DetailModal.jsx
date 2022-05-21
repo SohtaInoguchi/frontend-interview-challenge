@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 export default function DetailModal(props) {
-    const { selectedPerson, persons, setPersons, setIsSelected } = props;
+    const { selectedPerson, persons, setPersons, setIsSelected, isSelected } = props;
     const [title, setTitle] = useState(selectedPerson.title);
     const [firstName, setFirstName] = useState(selectedPerson.firstName);
     const [lastName, setLastName] = useState(selectedPerson.lastName);
@@ -39,27 +39,26 @@ export default function DetailModal(props) {
     }
 
   return (
-      <>
-        <h1>DetailModal</h1>
-            <ul id='person-details' >
-                <li>Title: <input type='text' value={title} onChange={e => setTitle(e.target.value)}/></li>
-                <li>First Name: <input type='text' value={firstName} onChange={e => setFirstName(e.target.value)}/></li>
-                <li>Last Name: <input type='text' value={lastName} onChange={e => setLastName(e.target.value)}/></li>
-                <li>Birthday: <input type='text' value={birthday} onChange={e => setBirthday(e.target.value)}/></li>
-                <li>Email: {selectedPerson.email}</li>
-                <li>Gender: {selectedPerson.gender}</li>
-                <li>Address: 
-                    <ul>
-                        <li>Country: {selectedPerson.country}</li>
-                        <li>streetName: {selectedPerson.address.streetName}</li>
-                        <li>City: {selectedPerson.address.city}</li>
-                    </ul>
-                </li>
-                <li>Favorite Books: {selectedPerson.favoriteBooks}</li>
-                <li>Comment: <textarea type='text' cols='50' rows='min-content' onChange={e => setComment(e.target.value)} value={comment}/></li>
-            </ul>
+      <section className={isSelected ? 'modal-show' : 'modal-hyde'}>
+        <ul>
+            <li>Title: <input type='text' value={title} onChange={e => setTitle(e.target.value)}/></li>
+            <li>First Name: <input type='text' value={firstName} onChange={e => setFirstName(e.target.value)}/></li>
+            <li>Last Name: <input type='text' value={lastName} onChange={e => setLastName(e.target.value)}/></li>
+            <li>Birthday: <input type='text' value={birthday} onChange={e => setBirthday(e.target.value)}/></li>
+            <li>Email: {selectedPerson.email}</li>
+            <li>Gender: {selectedPerson.gender}</li>
+            <li>Address: 
+                <ul>
+                    <li>Country: {selectedPerson.country}</li>
+                    <li>streetName: {selectedPerson.address.streetName}</li>
+                    <li>City: {selectedPerson.address.city}</li>
+                </ul>
+            </li>
+            <li>Favorite Books: {selectedPerson.favoriteBooks}</li>
+            <li>Comment: <textarea type='text' cols='50' rows='min-content' onChange={e => setComment(e.target.value)} value={comment}/></li>
+        </ul>
         <button onClick={updatePersonInfo}>Update</button>
         <button onClick={check}>check</button>
-      </>
+      </section>
   )
 }
