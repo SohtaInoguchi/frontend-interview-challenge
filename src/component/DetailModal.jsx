@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { fetchPersons } from '../App';
+import { fetchPersons } from '../helper/helper';
 
 export default function DetailModal(props) {
     const { selectedPerson, persons, setPersons, setIsSelected} = props;
