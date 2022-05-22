@@ -7,16 +7,23 @@ export default function Table(props) {
     const headerNames = ['ID', 'Title', 'Name', 'Email'];
     const [selectedPerson, setSelectedPerson] = useState({});
     const [isSelected, setIsSelected] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const getDetails = async (e) => {
         try {
             e.preventDefault();
+            setIsLoading(true);
             const selectedUserId = e.currentTarget.id;
             const response = await axios.get(`http://localhost:3000/persons/${selectedUserId}`)
             setSelectedPerson(response.data);
-            console.log("selected", selectedPerson);
             setIsSelected(true);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 2000);   
         } catch (err) {
+            setIsLoading(false);
+            setErrorMessage(err.message);
             console.error(`Error occurred: ${err}`);
         }
     }
@@ -39,13 +46,17 @@ export default function Table(props) {
             </tr>)}
         </tbody>
     </table>
-    {isSelected && 
+    {errorMessage && <div>{errorMessage}</div>}
+    {isLoading && <div>Loading data...</div>}
+    {!isLoading && isSelected &&
     <DetailModal 
         selectedPerson={selectedPerson} 
         persons={persons} 
         setPersons={setPersons}
         setIsSelected={setIsSelected}
-        isSelected={isSelected}/>}
+        isSelected={isSelected}
+        isLoading={isLoading}
+        />}
     </>
   )
 }

@@ -19,10 +19,10 @@ function App() {
         setPersons(response.data.results);
         setIsLoading(false);
       }
-    } catch (e) {
+    } catch (err) {
       setIsLoading(false);
-      console.error('Error occurred: ' + e);
-      setErrorMessage(e.message);
+      console.error(`Error occurred: ${err}`);
+      setErrorMessage(err.message);
     }
   };
 
