@@ -47,7 +47,7 @@
   border: solid black;
 }
 
-.modal-show {
+.modal {
   display: block;
   border: solid black;
   top: 10%;
@@ -58,9 +58,21 @@
   height: min-content;
   overflow: auto;
   background-color: rgb(255,255,255); 
-  /* background-color: rgba(0,0,0,0.4); */
 }
 
-.modal-hyde {
-  display: none;
+.indication {
+  display: inline-block;
+  border: solid black;
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  right: 25%;
+  left: 25%;
+  z-index: 2;
+  width: auto;
+  min-width: 3rem;
+  height: auto;
+  min-height: 10px;
+  text-align: center;
+  background-color: white;
 }

@@ -50,9 +50,7 @@ export default function DetailModal(props) {
         try {
             e.preventDefault();
             const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
-            console.log(responseDelete);
             const responsePersons = await axios.get('http://localhost:3000/persons');
-            console.log(responsePersons);
             setPersons([...responsePersons.data.results])
             setIsSelected(false);
         } catch (err) {
@@ -62,15 +60,19 @@ export default function DetailModal(props) {
 
   return (
     <>
-    {isUpdating && <section>Updating data...</section>}
-    {errorMessage && <section>{errorMessage}</section>}
+    {/* {isUpdating && <section>Updating data...</section>} */}
+      <section className='modal'>
+      {isUpdating && <div className='indication'>Updating data...</div>}
     {isUpdateSuccess && 
-    <section>
+    <section className='indication'>
         <h3>Update success</h3>
-        <button onClick={() => setIsSelected(false)}>Ok</button>
+        <button onClick={() => setIsSelected(false)}>close</button>
     </section>}
-    {/* <section className={isSelected ? 'modal-show' : 'modal-hyde'}> */}
-      <section className='modal-show'>
+    {errorMessage && 
+    <section className='indication'>
+        <div>{errorMessage}</div>
+        <button onClick={() => setIsSelected(false)}>close</button>
+    </section>}
         <ul>
             <li>Title: <input type='text' value={title} onChange={e => setTitle(e.target.value)}/></li>
             <li>First Name: <input type='text' value={firstName} onChange={e => setFirstName(e.target.value)}/></li>
