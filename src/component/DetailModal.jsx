@@ -37,7 +37,6 @@ export default function DetailModal(props) {
             setPersons(updatedPersons);
             setTimeout(() => {
                 setIsUpdating(false);
-                setIsSelected(false);
                 setIsUpdateSuccess(true);
             }, 3000);
         } catch (err) {
@@ -47,24 +46,29 @@ export default function DetailModal(props) {
         }
     }
 
-    const renderSuccess = () => {
-
-        setTimeout(() => {
-            setIsUpdateSuccess(false);
-        }, 1000)
-
-        return (
-            <>
-                <section>Successfuly updated</section>
-            </>
-        )
+    const deletePerson = async (e) => {
+        try {
+            e.preventDefault();
+            const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
+            console.log(responseDelete);
+            const responsePersons = await axios.get('http://localhost:3000/persons');
+            console.log(responsePersons);
+            setPersons([...responsePersons.data.results])
+            setIsSelected(false);
+        } catch (err) {
+            console.error(`Error occurred: ${err.message}`);
+        }
     }
 
   return (
     <>
     {isUpdating && <section>Updating data...</section>}
     {errorMessage && <section>{errorMessage}</section>}
-    {isUpdateSuccess && <section>{renderSuccess()}</section>}
+    {isUpdateSuccess && 
+    <section>
+        <h3>Update success</h3>
+        <button onClick={() => setIsSelected(false)}>Ok</button>
+    </section>}
     {/* <section className={isSelected ? 'modal-show' : 'modal-hyde'}> */}
       <section className='modal-show'>
         <ul>
@@ -85,6 +89,7 @@ export default function DetailModal(props) {
             <li>Comment: <textarea type='text' cols='50' rows='min-content' onChange={e => setComment(e.target.value)} value={comment}/></li>
         </ul>
         <button onClick={updatePersonInfo}>Update</button>
+        <button onClick={deletePerson}>Delete</button>
       </section>
     </>
   )
