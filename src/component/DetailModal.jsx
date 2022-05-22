@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { fetchPersons } from '../App';
 
 export default function DetailModal(props) {
-    const { selectedPerson, persons, setPersons, setIsSelected, isSelected, isLoading} = props;
+    const { selectedPerson, persons, setPersons, setIsSelected} = props;
     const [title, setTitle] = useState(selectedPerson.title);
     const [firstName, setFirstName] = useState(selectedPerson.firstName);
     const [lastName, setLastName] = useState(selectedPerson.lastName);
     const [birthday, setBirthday] = useState(selectedPerson.birthday);
     const [comment, setComment] = useState(selectedPerson.comment);
-    const [isUpdating, setIsUpdating] = useState(false);
+    // const [isUpdating, setIsUpdating] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
 
     const updatePersonInfo = async (e) => {
         try {
             e.preventDefault();
-            setIsUpdating(true);
+            // setIsUpdating(true);
+            setIsLoading(true);
             const response = await axios.patch(`http://localhost:3000/persons/${selectedPerson.id}`, {
                     firstName: firstName,
                     lastName: lastName,
@@ -36,12 +39,14 @@ export default function DetailModal(props) {
             })
             setPersons(updatedPersons);
             setTimeout(() => {
-                setIsUpdating(false);
+                // setIsUpdating(false);
+                setIsLoading(false);
                 setIsUpdateSuccess(true);
             }, 3000);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
-            setIsUpdating(false);
+            // setIsUpdating(false);
+            setIsLoading(false);
             setErrorMessage(err.message);
         }
     }
@@ -51,7 +56,8 @@ export default function DetailModal(props) {
             e.preventDefault();
             const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
             const responsePersons = await axios.get('http://localhost:3000/persons');
-            setPersons([...responsePersons.data.results])
+            // setPersons([...responsePersons.data.results]);
+            fetchPersons(setPersons, setErrorMessage, setIsLoading);
             setIsSelected(false);
         } catch (err) {
             console.error(`Error occurred: ${err.message}`);
@@ -62,7 +68,8 @@ export default function DetailModal(props) {
     <>
     {/* {isUpdating && <section>Updating data...</section>} */}
       <section className='modal'>
-      {isUpdating && <div className='indication'>Updating data...</div>}
+      {/* {isUpdating && <div className='indication'>Updating data...</div>} */}
+      {isLoading && <div className='indication'>Updating data...</div>}
     {isUpdateSuccess && 
     <section className='indication'>
         <h3>Update success</h3>
