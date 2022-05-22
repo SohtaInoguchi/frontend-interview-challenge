@@ -31,6 +31,8 @@ export default function Table(props) {
   return (
     <>
     <table id='persons-table'>
+        {errorMessage && <div className='indication'>{errorMessage}</div>}
+        {isLoading && <div className='indication'>Loading data...</div>}
         <thead>
             <tr>
                 {headerNames.map((headerName, i) => <th key={i}>{headerName}</th>)}
@@ -46,8 +48,6 @@ export default function Table(props) {
             </tr>)}
         </tbody>
     </table>
-    {errorMessage && <div>{errorMessage}</div>}
-    {isLoading && <div>Loading data...</div>}
     {!isLoading && isSelected &&
     <DetailModal 
         selectedPerson={selectedPerson} 

@@ -15,10 +15,10 @@ function App() {
       if (response.statusText !== 'OK') {
         throw Error('Something went wrong...');
       }
-      else {
+      // else {
         setPersons(response.data.results);
         setIsLoading(false);
-      }
+      // }
     } catch (err) {
       setIsLoading(false);
       console.error(`Error occurred: ${err}`);
@@ -31,11 +31,11 @@ function App() {
   }, []);
 
   return (
-    <>
-      {errorMessage && <div>{errorMessage}</div>}
-      {isLoading && <div>Loading data...</div>}
+    <div className='wrapper'>
+      {errorMessage && <div className='initial-indication'>{errorMessage}</div>}
+      {isLoading && <div className='initial-indication'>Loading data...</div>}
       {persons && <Table persons={persons} setPersons={setPersons}/>}
-    </>
+    </div>
   );
 }
 
