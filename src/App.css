@@ -93,3 +93,11 @@
   text-align: center;
   background-color: white;
 }
+
+#add-icon {
+  height: 5rem;
+  width: 5rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+}
