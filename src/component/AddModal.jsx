@@ -4,7 +4,7 @@ import { fetchPersons, isInputValid, isEmailValid, delay } from '../helper/helpe
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 export default function AddModal(props) {
-    const { selectedPerson, persons, setPersons, setIsSelected} = props;
+    const { selectedPerson, persons, setPersons, setIsSelected, setAddClicked, setIsAddedSuccess} = props;
     const [title, setTitle] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -81,21 +81,18 @@ export default function AddModal(props) {
                     setIsLoading(false);
                     return;
                 }
-                const response = await axios.post(`http://localhost:3000/personss`, newPerson);
-                await delay(2000);
-                if (response.statusText !== 'OK') {
-                    console.log("in error if");
-                    throw Error('Something wend wrong...');
-                }
-
+                const response = await axios.post(`http://localhost:3000/persons`, newPerson);
                 const responsePersons = await axios.get('http://localhost:3000/persons');
                 await delay(2000);
-                if (responsePersons.statusText !== 'OK') {
+                if (response.statusText !== 'OK' || responsePersons.statusText !== 'OK') {
                     console.log("in error if");
                     throw Error('Something wend wrong...');
                 }
                 fetchPersons(setPersons, setErrorMessage, setIsLoading);
                 setIsLoading(false);
+                // setIsUpdateSuccess(true);
+                setIsAddedSuccess(true);
+                setAddClicked(false);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
             setIsLoading(false);
@@ -107,17 +104,19 @@ export default function AddModal(props) {
       <>
       <section className='modal'>
       {isLoading && <div className='indication'>Updating data...</div>}
-    {/*{isUpdateSuccess && 
-    <section className='indication'>
-        <h3>Update success</h3>
-        <button onClick={() => setIsSelected(false)}>close</button>
-    </section>}*/}
 
-    {errorMessage && 
-    <section className='indication'>
-        <div>{errorMessage}</div>
-        <button onClick={() => setIsSelected(false)}>close</button>
-    </section>} 
+        {isUpdateSuccess && 
+        <section className='indication'>
+            <h3>Update success</h3>
+            {/* <button onClick={() => setAddClicked(false)}>close</button> */}
+            <button>close</button>
+        </section>}
+
+        {errorMessage && 
+        <section className='indication'>
+            <div>{errorMessage}</div>
+            <button onClick={() => setAddClicked(false)}>close</button>
+        </section>} 
     
         <div>
             <label for='title'>Title: </label>

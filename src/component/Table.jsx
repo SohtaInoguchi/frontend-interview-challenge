@@ -12,6 +12,7 @@ export default function Table(props) {
     const [isSelected, setIsSelected] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isAddedSuccess, setIsAddedSuccess] = useState(false);
     const [isAddClicked, setAddClicked] = useState(false);
 
     const getDetails = async (e) => {
@@ -52,6 +53,13 @@ export default function Table(props) {
         </tbody>
     </table>
     <IoMdAddCircle id='add-icon' onClick={() => setAddClicked(!isAddClicked)}/>
+
+    {isAddedSuccess && 
+    <section className='indication'>
+        <h3>Update success</h3>
+        <button onClick={() => setIsAddedSuccess(false)}>close</button>
+    </section>}
+
     {isAddClicked && 
     <AddModal
         selectedPerson={selectedPerson} 
@@ -59,6 +67,8 @@ export default function Table(props) {
         setPersons={setPersons}
         setIsSelected={setIsSelected}
         isSelected={isSelected}
+        setAddClicked={setAddClicked}
+        setIsAddedSuccess={setIsAddedSuccess}
         isLoading={isLoading}    
     />}
     {!isLoading && isSelected &&
