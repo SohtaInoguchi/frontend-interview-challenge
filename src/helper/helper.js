@@ -35,8 +35,9 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
   }
 
   export const isEmailValid = (email) => {
-    const mailFormat = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+    // const mailFormat = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
     // const mailFormat = /^([a-zA-Z0-9\._]+)@[a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
+    const mailFormat = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
     console.log(email.match(mailFormat));
     if (email.match(mailFormat)) {
       return true;

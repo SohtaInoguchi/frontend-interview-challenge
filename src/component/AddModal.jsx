@@ -55,8 +55,8 @@ export default function AddModal(props) {
                 postalCode,
                 favoriteColor,
                 favoriteBooks) 
-                // && 
-                // isEmailValid(email)
+                && 
+                isEmailValid(email)
                 ) {
                     console.log("valid input");
                     newPerson.title = title;
