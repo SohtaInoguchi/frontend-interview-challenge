@@ -22,7 +22,6 @@ function App() {
       {!isLoading && 
       <>
       <Table persons={persons} setPersons={setPersons}/> 
-      <IoMdAddCircle id='add-icon'/>
       </>}
     </div>
   );

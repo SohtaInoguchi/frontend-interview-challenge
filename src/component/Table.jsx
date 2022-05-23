@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DetailModal from './DetailModal';
+import { IoMdAddCircle } from 'react-icons/io';
+import AddModal from './AddModal';
 
 export default function Table(props) {
     const { persons, setPersons } = props;
@@ -9,6 +11,7 @@ export default function Table(props) {
     const [isSelected, setIsSelected] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
+    const [isAddClicked, setAddClicked] = useState(false);
 
     const getDetails = async (e) => {
         try {
@@ -48,6 +51,16 @@ export default function Table(props) {
             </tr>)}
         </tbody>
     </table>
+    <IoMdAddCircle id='add-icon' onClick={() => setAddClicked(!isAddClicked)}/>
+    {isAddClicked && 
+    <AddModal
+        selectedPerson={selectedPerson} 
+        persons={persons} 
+        setPersons={setPersons}
+        setIsSelected={setIsSelected}
+        isSelected={isSelected}
+        isLoading={isLoading}    
+    />}
     {!isLoading && isSelected &&
     <DetailModal 
         selectedPerson={selectedPerson} 

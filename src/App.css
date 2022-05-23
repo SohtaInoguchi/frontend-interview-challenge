@@ -64,6 +64,11 @@
   background-color: rgb(255,255,255); 
 }
 
+#add-form {
+  width: 20rem;
+  height: auto;
+}
+
 .initial-indication {
   margin: 10rem auto;
   display: inline-block;
