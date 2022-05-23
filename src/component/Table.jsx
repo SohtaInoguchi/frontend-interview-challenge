@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DetailModal from './DetailModal';
+import { delay } from '../helper/helper';
 import { IoMdAddCircle } from 'react-icons/io';
 import AddModal from './AddModal';
 
@@ -19,11 +20,10 @@ export default function Table(props) {
             setIsLoading(true);
             const selectedUserId = e.currentTarget.id;
             const response = await axios.get(`http://localhost:3000/persons/${selectedUserId}`)
+            await delay(2000);
             setSelectedPerson(response.data);
             setIsSelected(true);
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 2000);   
+            setIsLoading(false);
         } catch (err) {
             setIsLoading(false);
             setErrorMessage(err.message);

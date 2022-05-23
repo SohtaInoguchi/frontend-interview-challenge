@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { fetchPersons, isInputValid, isEmailValid } from '../helper/helper';
+import { fetchPersons, isInputValid, isEmailValid, delay } from '../helper/helper';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 
 export default function AddModal(props) {
@@ -42,6 +42,7 @@ export default function AddModal(props) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setIsLoading(true);
             const newPerson = {};
             if (isInputValid(
                 title,
@@ -70,41 +71,54 @@ export default function AddModal(props) {
                                         streetName: streetName,
                                         postalCode: postalCode
                                         }
-                    // newPerson.country = country; 
-                    // newPerson.streetName = streetName; 
-                    // newPerson.city = city;
                     newPerson.favoriteColor = favoriteColor;
                     newPerson.favoriteBooks = favoriteBooks;
                     console.log(newPerson);
                 }
                 else {
+                    alert("Please fill all the field besides Comment");
                     console.log("input invalid");
+                    setIsLoading(false);
+                    return;
                 }
-            const response = await axios.post(`http://localhost:3000/persons`, newPerson);
-            const responsePersons = await axios.get('http://localhost:3000/persons');
-            fetchPersons(setPersons, setErrorMessage, setIsLoading);
-            console.log(response);
+                const response = await axios.post(`http://localhost:3000/personss`, newPerson);
+                await delay(2000);
+                if (response.statusText !== 'OK') {
+                    console.log("in error if");
+                    throw Error('Something wend wrong...');
+                }
+
+                const responsePersons = await axios.get('http://localhost:3000/persons');
+                await delay(2000);
+                if (responsePersons.statusText !== 'OK') {
+                    console.log("in error if");
+                    throw Error('Something wend wrong...');
+                }
+                fetchPersons(setPersons, setErrorMessage, setIsLoading);
+                setIsLoading(false);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
+            setIsLoading(false);
+            setErrorMessage(err.message);
         }
     }
 
   return (
       <>
       <section className='modal'>
-      {/* {isLoading && <div className='indication'>Updating data...</div>}
-    {isUpdateSuccess && 
+      {isLoading && <div className='indication'>Updating data...</div>}
+    {/*{isUpdateSuccess && 
     <section className='indication'>
         <h3>Update success</h3>
         <button onClick={() => setIsSelected(false)}>close</button>
-    </section>}
+    </section>}*/}
+
     {errorMessage && 
     <section className='indication'>
         <div>{errorMessage}</div>
         <button onClick={() => setIsSelected(false)}>close</button>
-    </section>} */}
+    </section>} 
     
-    {/* <form action='http://localhost:3000/persons' method='post' id='add-form'> */}
         <div>
             <label for='title'>Title: </label>
             <input 
@@ -151,13 +165,6 @@ export default function AddModal(props) {
                 <option value='Female'>Female</option>
                 <option value='Genderfluid'>Genderfluid</option>
             </select>
-            {/* <input 
-            type='text' 
-            value={gender} 
-            name='gender' 
-            id='gender' 
-            onChange={(e) => setGender(e.target.value)} 
-            required/> */}
         </div>
             <label for='country'>Country: </label>
             <input 
@@ -211,14 +218,6 @@ export default function AddModal(props) {
                 })
             }
             <button onClick={addAnotherInput}>Add another book</button>            
-            {/* <label for='favoriteBooks'>Favorite books: </label>
-            <input 
-            type='text' 
-            value={favoriteBooks} 
-            name='favoriteBooks' 
-            id='favoriteBooks'
-            onChange={(e) => setFavoriteBooks(e.target.value)}
-            required/> */}
         </div>
 
         <div>
@@ -256,7 +255,6 @@ export default function AddModal(props) {
         </div>
         <button onClick={handleSubmit}>Add</button>
         <button onClick={check}>check</button>
-    {/* </form> */}
       </section>
       </>
   )

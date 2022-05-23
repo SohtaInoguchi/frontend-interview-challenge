@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { fetchPersons } from '../helper/helper';
+import { fetchPersons, delay } from '../helper/helper';
 
 export default function DetailModal(props) {
     const { selectedPerson, persons, setPersons, setIsSelected} = props;
@@ -25,6 +25,7 @@ export default function DetailModal(props) {
                     birthday: birthday,
                     comment: comment
                 });
+            await delay(2000);
                 if (response.statusText !== 'OK') {
                     throw Error('Something went wrong...');
                 }
@@ -38,11 +39,8 @@ export default function DetailModal(props) {
                 }
             })
             setPersons(updatedPersons);
-            setTimeout(() => {
-                // setIsUpdating(false);
-                setIsLoading(false);
-                setIsUpdateSuccess(true);
-            }, 3000);
+            setIsLoading(false);
+            setIsUpdateSuccess(true);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
             // setIsUpdating(false);
