@@ -5,7 +5,6 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
       let page = 1;
       let response = await axios.get(`http://localhost:3000/persons?page=${page}`);
       let personsArr = response.data.results;
-      console.log(response);
       if (response.statusText !== 'OK') {
         throw Error('Something went wrong...');
       }
@@ -17,7 +16,6 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
             throw Error('Something went wrong...');
           }
           personsArr = personsArr.concat(response.data.results);
-          console.log("persons arr", personsArr);
         }
         setPersons(personsArr);
       }
@@ -28,3 +26,20 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
       setErrorMessage(err.message);
     }
   };
+
+  export const isInputValid = (title, firstName, lastName, birthday, gender, country, streetName, city, postalCode, favoriteColor, favoriteBooks) => {
+    if (title.length > 1 && firstName && lastName && birthday && gender && country && streetName && city && postalCode && favoriteColor && favoriteBooks[favoriteBooks.length - 1]) {
+      return true;
+    }
+    return false;
+  }
+
+  export const isEmailValid = (email) => {
+    const mailFormat = /^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/;
+    // const mailFormat = /^([a-zA-Z0-9\._]+)@[a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
+    console.log(email.match(mailFormat));
+    if (email.match(mailFormat)) {
+      return true;
+    }
+    return false;
+  }
