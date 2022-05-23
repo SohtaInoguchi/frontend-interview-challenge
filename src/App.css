@@ -64,6 +64,11 @@
   background-color: rgb(255,255,255); 
 }
 
+#add-form {
+  width: 20rem;
+  height: auto;
+}
+
 .initial-indication {
   margin: 10rem auto;
   display: inline-block;
@@ -92,4 +97,12 @@
   min-height: 10px;
   text-align: center;
   background-color: white;
+}
+
+#add-icon {
+  height: 5rem;
+  width: 5rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
 }
