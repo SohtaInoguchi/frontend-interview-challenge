@@ -36,3 +36,73 @@
     transform: rotate(360deg);
   }
 }
+
+.wrapper {
+  text-align: center;
+}
+
+.table-rows:hover {
+  color: gray;
+  cursor: pointer;
+}
+
+#persons-table {
+  margin: 10rem auto;
+  border: solid black;
+}
+
+.modal {
+  display: block;
+  border: solid black;
+  top: 10%;
+  left: 20%;
+  position: fixed;
+  z-index: 1;
+  width: min-content;
+  height: min-content;
+  overflow: auto;
+  background-color: rgb(255,255,255); 
+}
+
+#add-form {
+  width: 20rem;
+  height: auto;
+}
+
+.initial-indication {
+  margin: 10rem auto;
+  display: inline-block;
+  border: solid black;
+  width: min-content;
+  min-width: 10rem;
+  height: auto;
+  min-height: 3rem;
+  text-align: center;
+  vertical-align: middle;
+  background-color: white;
+}
+
+.indication {
+  display: inline-block;
+  border: solid black;
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  right: 25%;
+  left: 25%;
+  z-index: 2;
+  width: auto;
+  min-width: 3rem;
+  height: auto;
+  min-height: 10px;
+  text-align: center;
+  background-color: white;
+}
+
+#add-icon {
+  height: 5rem;
+  width: 5rem;
+  position: absolute;
+  right: 2rem;
+  bottom: 2rem;
+}

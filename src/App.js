@@ -3,27 +3,27 @@ import './App.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Table from './component/Table';
+import { fetchPersons } from './helper/helper';
+import { IoMdAddCircle } from 'react-icons/io';
 
 function App() {
   const [persons, setPersons] = useState([]);
-
-  const fetchPersons = async () => {
-    try {
-      const response = await axios.get('http://localhost:3000/persons');
-      setPersons(response.data.results);      
-    } catch (e) {
-      console.error(e);
-    }
-  };
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    fetchPersons();
+    fetchPersons(setPersons, setErrorMessage, setIsLoading);
   }, []);
 
   return (
-    <>
-      {persons.length && <Table persons={persons}/>}
-    </>
+    <div className='wrapper'>
+      {errorMessage && <div className='initial-indication'>{errorMessage}</div>}
+      {isLoading && <div className='initial-indication'>Loading data...</div>}
+      {!isLoading && 
+      <>
+      <Table persons={persons} setPersons={setPersons}/> 
+      </>}
+    </div>
   );
 }
 
