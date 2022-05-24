@@ -35,8 +35,9 @@ export default function AddModal(props) {
         setFavoriteBooks([...tempArr]);
     }
 
-    const check = () => {
-        console.log(gender);
+    const handleCancelClick = e => {
+        e.preventDefault();
+        setAddClicked(false);
     }
 
     const handleSubmit = async (e) => {
@@ -253,7 +254,7 @@ export default function AddModal(props) {
 
         </div>
         <button onClick={handleSubmit}>Add</button>
-        <button onClick={check}>check</button>
+        <button onClick={handleCancelClick}>Cancel</button>
       </section>
       </>
   )

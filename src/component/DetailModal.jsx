@@ -59,9 +59,9 @@ export default function DetailModal(props) {
         }
     }
 
-    const check = (e) => {
+    const handleCancelClick = e => {
         e.preventDefault();
-        console.log(backgroundColor);
+        setIsSelected(false);
     }
 
   return (
@@ -97,7 +97,7 @@ export default function DetailModal(props) {
         </ul>
         <button onClick={updatePersonInfo}>Update</button>
         <button onClick={deletePerson}>Delete</button>
-        <button onClick={check}>check</button>
+        <button onClick={handleCancelClick}>Cancel</button>
       </section>
     </>
   )
