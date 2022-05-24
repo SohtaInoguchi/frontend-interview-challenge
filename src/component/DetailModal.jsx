@@ -9,15 +9,14 @@ export default function DetailModal(props) {
     const [lastName, setLastName] = useState(selectedPerson.lastName);
     const [birthday, setBirthday] = useState(selectedPerson.birthday);
     const [comment, setComment] = useState(selectedPerson.comment);
-    // const [isUpdating, setIsUpdating] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState(selectedPerson.favoriteColor);
 
     const updatePersonInfo = async (e) => {
         try {
             e.preventDefault();
-            // setIsUpdating(true);
             setIsLoading(true);
             const response = await axios.patch(`http://localhost:3000/persons/${selectedPerson.id}`, {
                     firstName: firstName,
@@ -43,7 +42,6 @@ export default function DetailModal(props) {
             setIsUpdateSuccess(true);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
-            // setIsUpdating(false);
             setIsLoading(false);
             setErrorMessage(err.message);
         }
@@ -54,7 +52,6 @@ export default function DetailModal(props) {
             e.preventDefault();
             const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
             const responsePersons = await axios.get('http://localhost:3000/persons');
-            // setPersons([...responsePersons.data.results]);
             fetchPersons(setPersons, setErrorMessage, setIsLoading);
             setIsSelected(false);
         } catch (err) {
@@ -62,22 +59,25 @@ export default function DetailModal(props) {
         }
     }
 
+    const check = (e) => {
+        e.preventDefault();
+        console.log(backgroundColor);
+    }
+
   return (
     <>
-    {/* {isUpdating && <section>Updating data...</section>} */}
-      <section className='modal'>
-      {/* {isUpdating && <div className='indication'>Updating data...</div>} */}
-      {isLoading && <div className='indication'>Updating data...</div>}
-    {isUpdateSuccess && 
-    <section className='indication'>
-        <h3>Update success</h3>
-        <button onClick={() => setIsSelected(false)}>close</button>
-    </section>}
-    {errorMessage && 
-    <section className='indication'>
-        <div>{errorMessage}</div>
-        <button onClick={() => setIsSelected(false)}>close</button>
-    </section>}
+        <section className='modal' style={{backgroundColor: backgroundColor}}>
+                {isLoading && <div className='indication'>Updating data...</div>}
+                {isUpdateSuccess && 
+                <section className='indication'>
+                    <h3>Update success</h3>
+                    <button onClick={() => setIsSelected(false)}>close</button>
+                </section>}
+                {errorMessage && 
+                <section className='indication'>
+                    <div>{errorMessage}</div>
+                    <button onClick={() => setIsSelected(false)}>close</button>
+                </section>}
         <ul>
             <li>Title: <input type='text' value={title} onChange={e => setTitle(e.target.value)}/></li>
             <li>First Name: <input type='text' value={firstName} onChange={e => setFirstName(e.target.value)}/></li>
@@ -97,6 +97,7 @@ export default function DetailModal(props) {
         </ul>
         <button onClick={updatePersonInfo}>Update</button>
         <button onClick={deletePerson}>Delete</button>
+        <button onClick={check}>check</button>
       </section>
     </>
   )
