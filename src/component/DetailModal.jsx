@@ -1,16 +1,26 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { fetchPersons, delay } from '../helper/helper';
+import { fetchPersons, delay, switchAttribute } from '../helper/helper';
 import { PersonsContext } from '../App';
 
 export default function DetailModal(props) {
     const { selectedPerson, setIsSelected} = props;
     const { persons, setPersons } = useContext(PersonsContext);
-    const [title, setTitle] = useState(selectedPerson.title);
+
+    const [id, setId] = useState(selectedPerson.id);
     const [firstName, setFirstName] = useState(selectedPerson.firstName);
     const [lastName, setLastName] = useState(selectedPerson.lastName);
+    const [favoriteBooks, setFavoriteBooks] = useState(selectedPerson.favoriteBooks);
+    const [email, setEmail] = useState(selectedPerson.email);
+    const [gender, setGender] = useState(selectedPerson.gender);
+    const [country, setCountry] = useState(selectedPerson.address.country);
+    const [streetName, setStreetName] = useState(selectedPerson.address.streetName);
+    const [city, setCity] = useState(selectedPerson.address.city);
+    const [title, setTitle] = useState(selectedPerson.title);
     const [birthday, setBirthday] = useState(selectedPerson.birthday);
+    const [favoriteColor, setFavoriteColor] = useState(selectedPerson.favoriteColor);
     const [comment, setComment] = useState(selectedPerson.comment);
+    
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
@@ -65,7 +75,7 @@ export default function DetailModal(props) {
         e.preventDefault();
         setIsSelected(false);
     }
-
+    
   return (
     <>
         <section className='modal' style={{backgroundColor: backgroundColor}}>
@@ -81,21 +91,55 @@ export default function DetailModal(props) {
                     <button onClick={() => setIsSelected(false)}>close</button>
                 </section>}
         <ul>
-            <li>Title: <input type='text' value={title} onChange={e => setTitle(e.target.value)}/></li>
-            <li>First Name: <input type='text' value={firstName} onChange={e => setFirstName(e.target.value)}/></li>
-            <li>Last Name: <input type='text' value={lastName} onChange={e => setLastName(e.target.value)}/></li>
-            <li>Birthday: <input type='text' value={birthday} onChange={e => setBirthday(e.target.value)}/></li>
-            <li>Email: {selectedPerson.email}</li>
-            <li>Gender: {selectedPerson.gender}</li>
-            <li>Address: 
-                <ul>
-                    <li>Country: {selectedPerson.address.country}</li>
-                    <li>streetName: {selectedPerson.address.streetName}</li>
-                    <li>City: {selectedPerson.address.city}</li>
-                </ul>
-            </li>
-            <li>Favorite Books: {selectedPerson.favoriteBooks}</li>
-            <li>Comment: <textarea type='text' cols='50' rows='min-content' onChange={e => setComment(e.target.value)} value={comment}/></li>
+            {
+                Object.keys(selectedPerson).map((property, index) => {
+                    // const attributeObj = switchAttribute(property);
+                    const attributeObj = switchAttribute(property, 
+                                        setId, 
+                                        setFirstName, 
+                                        setLastName,
+                                        setFavoriteBooks,
+                                        setEmail,
+                                        setGender,
+                                        setTitle,
+                                        setBirthday,
+                                        setFavoriteColor,
+                                        setComment);
+                    const value = property === 'id' ? id : 
+                                  property === 'firstName' ? firstName :
+                                  property === 'lastName' ? lastName : 
+                                  property === 'favoriteBooks' ? favoriteBooks : 
+                                  property === 'email' ? email : 
+                                  property === 'gender' ? gender : 
+                                  property === 'title' ? title : 
+                                  property === 'favoriteColor' ? favoriteColor : 
+                                  property === 'birthday' ? birthday : 
+                                  property === 'comment' ? comment : 
+                                  'No info';
+                    return (
+                        <>
+                            {property === 'address' ? 
+                            Object.keys(selectedPerson.address).map((addressInfo, index) => {
+                                return (
+                                    <li key={index}>{`${addressInfo}: `}
+                                    <input type='text' value={selectedPerson.address[addressInfo]} 
+                                    // onChange={e => changeHandler(e.target.value)}
+                                    />
+                                    </li>    
+                                )
+                            })
+                            :
+                            <li key={index}>{`${attributeObj.label}: `}
+                            <input 
+                            type={attributeObj.inputType} 
+                            value={value} 
+                            onChange={e => attributeObj.changeHandler(e.target.value)}/>
+                            </li>
+                            }
+                        </>
+                    )
+                })
+            }
         </ul>
         <button onClick={updatePersonInfo}>Update</button>
         <button onClick={deletePerson}>Delete</button>
