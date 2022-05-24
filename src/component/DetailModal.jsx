@@ -66,10 +66,6 @@ export default function DetailModal(props) {
         setIsSelected(false);
     }
 
-    useEffect(() => {
-        console.log(selectedPerson);
-    })
-
   return (
     <>
         <section className='modal' style={{backgroundColor: backgroundColor}}>
