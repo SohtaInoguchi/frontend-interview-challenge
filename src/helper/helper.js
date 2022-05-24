@@ -44,3 +44,10 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
   }
 
   export const delay= ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  export const randomIdGenerator = () => {
+    const randomNumber = Math.floor(Math.random() * 10000);
+    console.log(randomNumber);
+    const id = `6ad313a7d${randomNumber}`;
+    return id;
+  }
