@@ -60,13 +60,16 @@ export default function Table(props) {
     {isAddedSuccess && 
     <section className='indication'>
         <h3>Update success</h3>
-        <button onClick={() => setIsAddedSuccess(false)}>close</button>
+        <button onClick={() => {
+            setIsAddedSuccess(false)
+            setIsSelected(false)
+        }}>close</button>
     </section>}
 
     {isAddClicked && 
     <AddModal
         selectedPerson={selectedPerson} 
-        persons={persons} 
+        // persons={persons} 
         // setPersons={setPersons}
         setIsSelected={setIsSelected}
         isSelected={isSelected}
@@ -77,7 +80,7 @@ export default function Table(props) {
     {!isLoading && isSelected &&
     <DetailModal 
         selectedPerson={selectedPerson} 
-        persons={persons} 
+        // persons={persons} 
         // setPersons={setPersons}
         setIsSelected={setIsSelected}
         isSelected={isSelected}

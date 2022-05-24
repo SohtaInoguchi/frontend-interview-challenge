@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { fetchPersons, isInputValid, isEmailValid, delay } from '../helper/helper';
+import { fetchPersons, isInputValid, isEmailValid, delay, randomIdGenerator } from '../helper/helper';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
+import { PersonsContext } from '../App';
 
 export default function AddModal(props) {
-    const { selectedPerson, persons, setPersons, setIsSelected, setAddClicked, setIsAddedSuccess} = props;
+    // const { selectedPerson, persons, setPersons, setIsSelected, setAddClicked, setIsAddedSuccess} = props;
+    const { selectedPerson, setIsSelected, setAddClicked, setIsAddedSuccess} = props;
+    const { persons, setPersons } = useContext(PersonsContext);
     const [title, setTitle] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -61,6 +64,7 @@ export default function AddModal(props) {
                 isEmailValid(email)
                 ) {
                     console.log("valid input");
+                    newPerson.id = randomIdGenerator();
                     newPerson.title = title;
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;

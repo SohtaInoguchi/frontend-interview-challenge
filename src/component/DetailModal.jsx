@@ -1,12 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { fetchPersons, delay } from '../helper/helper';
 import { PersonsContext } from '../App';
 
 export default function DetailModal(props) {
     // const { selectedPerson, persons, setPersons, setIsSelected} = props;
-    const { selectedPerson, persons, setIsSelected} = props;
-    const { setPersons } = useContext(PersonsContext);
+    // const { selectedPerson, persons, setIsSelected} = props;
+    const { selectedPerson, setIsSelected} = props;
+    const { persons, setPersons } = useContext(PersonsContext);
     const [title, setTitle] = useState(selectedPerson.title);
     const [firstName, setFirstName] = useState(selectedPerson.firstName);
     const [lastName, setLastName] = useState(selectedPerson.lastName);
@@ -66,6 +67,10 @@ export default function DetailModal(props) {
         e.preventDefault();
         setIsSelected(false);
     }
+
+    useEffect(() => {
+        console.log(selectedPerson);
+    })
 
   return (
     <>
