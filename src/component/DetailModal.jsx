@@ -4,8 +4,6 @@ import { fetchPersons, delay } from '../helper/helper';
 import { PersonsContext } from '../App';
 
 export default function DetailModal(props) {
-    // const { selectedPerson, persons, setPersons, setIsSelected} = props;
-    // const { selectedPerson, persons, setIsSelected} = props;
     const { selectedPerson, setIsSelected} = props;
     const { persons, setPersons } = useContext(PersonsContext);
     const [title, setTitle] = useState(selectedPerson.title);

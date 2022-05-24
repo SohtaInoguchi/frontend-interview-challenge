@@ -7,8 +7,6 @@ import AddModal from './AddModal';
 import { PersonsContext } from '../App';
 
 export default function Table(props) {
-    // const { persons, setPersons } = props;
-    // const { persons, setPersons } = useContext(PersonsContext);
     const { persons } = useContext(PersonsContext);
     const headerNames = ['ID', 'Title', 'Name', 'Email'];
     const [selectedPerson, setSelectedPerson] = useState({});
@@ -60,19 +58,12 @@ export default function Table(props) {
     {isAddedSuccess && 
     <section className='indication'>
         <h3>Update success</h3>
-        <button onClick={() => {
-            setIsAddedSuccess(false)
-            setIsSelected(false)
-        }}>close</button>
+        <button onClick={() => setIsAddedSuccess(false)}>close</button>
     </section>}
 
     {isAddClicked && 
     <AddModal
         selectedPerson={selectedPerson} 
-        // persons={persons} 
-        // setPersons={setPersons}
-        setIsSelected={setIsSelected}
-        isSelected={isSelected}
         setAddClicked={setAddClicked}
         setIsAddedSuccess={setIsAddedSuccess}
         isLoading={isLoading}    
@@ -80,10 +71,7 @@ export default function Table(props) {
     {!isLoading && isSelected &&
     <DetailModal 
         selectedPerson={selectedPerson} 
-        // persons={persons} 
-        // setPersons={setPersons}
         setIsSelected={setIsSelected}
-        isSelected={isSelected}
         isLoading={isLoading}
         />}
     </>

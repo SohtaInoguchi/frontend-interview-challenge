@@ -5,8 +5,7 @@ import { keyboard } from '@testing-library/user-event/dist/keyboard';
 import { PersonsContext } from '../App';
 
 export default function AddModal(props) {
-    // const { selectedPerson, persons, setPersons, setIsSelected, setAddClicked, setIsAddedSuccess} = props;
-    const { selectedPerson, setIsSelected, setAddClicked, setIsAddedSuccess} = props;
+    const { setAddClicked, setIsAddedSuccess} = props;
     const { persons, setPersons } = useContext(PersonsContext);
     const [title, setTitle] = useState('');
     const [firstName, setFirstName] = useState('');
@@ -21,7 +20,6 @@ export default function AddModal(props) {
     const [favoriteColor, setFavoriteColor] = useState('');
     const [favoriteBooks, setFavoriteBooks] = useState(['']);
     const [comment, setComment] = useState('');
-    // const [isUpdating, setIsUpdating] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
@@ -95,7 +93,6 @@ export default function AddModal(props) {
                 }
                 fetchPersons(setPersons, setErrorMessage, setIsLoading);
                 setIsLoading(false);
-                // setIsUpdateSuccess(true);
                 setIsAddedSuccess(true);
                 setAddClicked(false);
         } catch (err) {
@@ -113,8 +110,7 @@ export default function AddModal(props) {
         {isUpdateSuccess && 
         <section className='indication'>
             <h3>Update success</h3>
-            {/* <button onClick={() => setAddClicked(false)}>close</button> */}
-            <button>close</button>
+            <button onClick={() => setAddClicked(false)}>close</button>
         </section>}
 
         {errorMessage && 
