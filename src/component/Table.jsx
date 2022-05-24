@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import DetailModal from './DetailModal';
 import { delay } from '../helper/helper';
 import { IoMdAddCircle } from 'react-icons/io';
 import AddModal from './AddModal';
+import { PersonsContext } from '../App';
 
 export default function Table(props) {
-    const { persons, setPersons } = props;
+    // const { persons, setPersons } = props;
+    // const { persons, setPersons } = useContext(PersonsContext);
+    const { persons } = useContext(PersonsContext);
     const headerNames = ['ID', 'Title', 'Name', 'Email'];
     const [selectedPerson, setSelectedPerson] = useState({});
     const [isSelected, setIsSelected] = useState(false);
@@ -64,7 +67,7 @@ export default function Table(props) {
     <AddModal
         selectedPerson={selectedPerson} 
         persons={persons} 
-        setPersons={setPersons}
+        // setPersons={setPersons}
         setIsSelected={setIsSelected}
         isSelected={isSelected}
         setAddClicked={setAddClicked}
@@ -75,7 +78,7 @@ export default function Table(props) {
     <DetailModal 
         selectedPerson={selectedPerson} 
         persons={persons} 
-        setPersons={setPersons}
+        // setPersons={setPersons}
         setIsSelected={setIsSelected}
         isSelected={isSelected}
         isLoading={isLoading}
