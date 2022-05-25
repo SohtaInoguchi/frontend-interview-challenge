@@ -122,7 +122,7 @@ export default function AddModal(props) {
             <button onClick={() => setAddClicked(false)}>close</button>
         </section>}
     
-    <form>
+    <form className='modal-form'>
         <div>
             <label for='title'>Title: </label>
             <input 

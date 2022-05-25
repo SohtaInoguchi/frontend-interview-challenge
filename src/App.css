@@ -38,7 +38,6 @@
 }
 
 /* .wrapper {
-  text-align: center;
 } */
 
 .table-rows:hover {
@@ -73,8 +72,8 @@
 .modal {
   display: block;
   border: solid black;
-  top: 10%;
-  left: 20%;
+  top: 1rem;
+  left: 35%;
   position: fixed;
   z-index: 1;
   width: min-content;
@@ -86,7 +85,7 @@
 .modal-form {
   position: fixed;
   border: solid black;
-  padding: 4rem;
+  padding: 2rem;
   width: min-content;
   min-width: 20rem;
   height: min-content;

@@ -94,7 +94,8 @@ export default function DetailModal(props) {
             <form className='modal-form'>
                 {
                     Object.keys(selectedPerson).map((property, index) => {
-                        const attributeObj = switchAttribute(property, 
+                        const attributeObj = switchAttribute(
+                                            property, 
                                             setId, 
                                             setFirstName, 
                                             setLastName,
@@ -121,11 +122,13 @@ export default function DetailModal(props) {
                                 {property === 'address' ? 
                                 Object.keys(selectedPerson.address).map((addressInfo, index) => {
                                     return (
-                                        <div className='input-fields'>
-                                        <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
-                                        <input type='text' value={selectedPerson.address[addressInfo]}/>
-                                        </div>
-                                        // onChange={e => changeHandler(e.target.value)}
+                                        <>
+                                        {index === 0 && <div>Address</div>}
+                                            <div className='input-fields'>
+                                                <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
+                                                <input type='text' value={selectedPerson.address[addressInfo]}/>
+                                            </div>
+                                        </>
                                     )
                                 })
                                 :
