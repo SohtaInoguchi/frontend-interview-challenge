@@ -79,7 +79,8 @@ export default function DetailModal(props) {
   return (
     <>
         <section className='modal' style={{backgroundColor: backgroundColor}}>
-            {isLoading && <div className='indication'>Updating data...</div>}
+            {isLoading && 
+            <div className='indication'>Updating data...</div>}
             {isUpdateSuccess && 
             <section className='indication'>
                 <h3>Update success</h3>
@@ -90,7 +91,7 @@ export default function DetailModal(props) {
                 <div>{errorMessage}</div>
                 <button onClick={() => setIsSelected(false)}>close</button>
             </section>}
-            <ul>
+            <form className='modal-form'>
                 {
                     Object.keys(selectedPerson).map((property, index) => {
                         const attributeObj = switchAttribute(property, 
@@ -120,29 +121,39 @@ export default function DetailModal(props) {
                                 {property === 'address' ? 
                                 Object.keys(selectedPerson.address).map((addressInfo, index) => {
                                     return (
-                                        <li key={index}>{`${addressInfo}: `}
-                                        <input type='text' value={selectedPerson.address[addressInfo]} 
+                                        <div className='input-fields'>
+                                        <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
+                                        <input type='text' value={selectedPerson.address[addressInfo]}/>
+                                        </div>
                                         // onChange={e => changeHandler(e.target.value)}
-                                        />
-                                        </li>    
                                     )
                                 })
                                 :
-                                <li key={index}>{`${attributeObj.label}: `}
+                                <div className='input-fields'>
+                                <label key={index} for={attributeObj.label}>{`${attributeObj.label}: `}</label>
+                                {property === 'comment' ? 
+                                <textarea 
+                                id={attributeObj.label} 
+                                name={attributeObj.label}
+                                rows='5' cols='30'>
+                                    {selectedPerson.comment}
+                                </textarea>
+                                :
                                 <input 
-                                type={attributeObj.inputType} 
-                                value={value} 
-                                onChange={e => attributeObj.changeHandler(e.target.value)}/>
-                                </li>
+                                    type={attributeObj.inputType} 
+                                    value={value} 
+                                    onChange={e => attributeObj.changeHandler(e.target.value)}/>
+                                }
+                                </div>
                                 }
                             </>
                         )
                     })
                 }
-            </ul>
-        <button onClick={updatePersonInfo}>Update</button>
-        <button onClick={deletePerson}>Delete</button>
-        <button onClick={handleCancelClick}>Cancel</button>
+                <button onClick={updatePersonInfo}>Update</button>
+                <button onClick={deletePerson}>Delete</button>
+                <button onClick={handleCancelClick}>Cancel</button>
+            </form>
       </section>
     </>
   )

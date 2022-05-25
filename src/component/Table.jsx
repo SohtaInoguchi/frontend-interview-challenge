@@ -36,8 +36,8 @@ export default function Table(props) {
   return (
     <>
     <table id='persons-table'>
-        {errorMessage && <div className='indication'>{errorMessage}</div>}
-        {isLoading && <div className='indication'>Loading data...</div>}
+    {errorMessage && <div className='indication'>{errorMessage}</div>}
+    {isLoading && <div className='indication'>Loading data...</div>}
         <thead>
             <tr>
                 {headerNames.map((headerName, i) => <th key={i} className="table-headers">{headerName}</th>)}
