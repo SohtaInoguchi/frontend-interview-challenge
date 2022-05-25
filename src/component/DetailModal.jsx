@@ -79,68 +79,67 @@ export default function DetailModal(props) {
   return (
     <>
         <section className='modal' style={{backgroundColor: backgroundColor}}>
-                {isLoading && <div className='indication'>Updating data...</div>}
-                {isUpdateSuccess && 
-                <section className='indication'>
-                    <h3>Update success</h3>
-                    <button onClick={() => setIsSelected(false)}>close</button>
-                </section>}
-                {errorMessage && 
-                <section className='indication'>
-                    <div>{errorMessage}</div>
-                    <button onClick={() => setIsSelected(false)}>close</button>
-                </section>}
-        <ul>
-            {
-                Object.keys(selectedPerson).map((property, index) => {
-                    // const attributeObj = switchAttribute(property);
-                    const attributeObj = switchAttribute(property, 
-                                        setId, 
-                                        setFirstName, 
-                                        setLastName,
-                                        setFavoriteBooks,
-                                        setEmail,
-                                        setGender,
-                                        setTitle,
-                                        setBirthday,
-                                        setFavoriteColor,
-                                        setComment);
-                    const value = property === 'id' ? id : 
-                                  property === 'firstName' ? firstName :
-                                  property === 'lastName' ? lastName : 
-                                  property === 'favoriteBooks' ? favoriteBooks : 
-                                  property === 'email' ? email : 
-                                  property === 'gender' ? gender : 
-                                  property === 'title' ? title : 
-                                  property === 'favoriteColor' ? favoriteColor : 
-                                  property === 'birthday' ? birthday : 
-                                  property === 'comment' ? comment : 
-                                  'No info';
-                    return (
-                        <>
-                            {property === 'address' ? 
-                            Object.keys(selectedPerson.address).map((addressInfo, index) => {
-                                return (
-                                    <li key={index}>{`${addressInfo}: `}
-                                    <input type='text' value={selectedPerson.address[addressInfo]} 
-                                    // onChange={e => changeHandler(e.target.value)}
-                                    />
-                                    </li>    
-                                )
-                            })
-                            :
-                            <li key={index}>{`${attributeObj.label}: `}
-                            <input 
-                            type={attributeObj.inputType} 
-                            value={value} 
-                            onChange={e => attributeObj.changeHandler(e.target.value)}/>
-                            </li>
-                            }
-                        </>
-                    )
-                })
-            }
-        </ul>
+            {isLoading && <div className='indication'>Updating data...</div>}
+            {isUpdateSuccess && 
+            <section className='indication'>
+                <h3>Update success</h3>
+                <button onClick={() => setIsSelected(false)}>close</button>
+            </section>}
+            {errorMessage && 
+            <section className='indication'>
+                <div>{errorMessage}</div>
+                <button onClick={() => setIsSelected(false)}>close</button>
+            </section>}
+            <ul>
+                {
+                    Object.keys(selectedPerson).map((property, index) => {
+                        const attributeObj = switchAttribute(property, 
+                                            setId, 
+                                            setFirstName, 
+                                            setLastName,
+                                            setFavoriteBooks,
+                                            setEmail,
+                                            setGender,
+                                            setTitle,
+                                            setBirthday,
+                                            setFavoriteColor,
+                                            setComment);
+                        const value = property === 'id' ? id : 
+                                    property === 'firstName' ? firstName :
+                                    property === 'lastName' ? lastName : 
+                                    property === 'favoriteBooks' ? favoriteBooks : 
+                                    property === 'email' ? email : 
+                                    property === 'gender' ? gender : 
+                                    property === 'title' ? title : 
+                                    property === 'favoriteColor' ? favoriteColor : 
+                                    property === 'birthday' ? birthday : 
+                                    property === 'comment' ? comment : 
+                                    'No info';
+                        return (
+                            <>
+                                {property === 'address' ? 
+                                Object.keys(selectedPerson.address).map((addressInfo, index) => {
+                                    return (
+                                        <li key={index}>{`${addressInfo}: `}
+                                        <input type='text' value={selectedPerson.address[addressInfo]} 
+                                        // onChange={e => changeHandler(e.target.value)}
+                                        />
+                                        </li>    
+                                    )
+                                })
+                                :
+                                <li key={index}>{`${attributeObj.label}: `}
+                                <input 
+                                type={attributeObj.inputType} 
+                                value={value} 
+                                onChange={e => attributeObj.changeHandler(e.target.value)}/>
+                                </li>
+                                }
+                            </>
+                        )
+                    })
+                }
+            </ul>
         <button onClick={updatePersonInfo}>Update</button>
         <button onClick={deletePerson}>Delete</button>
         <button onClick={handleCancelClick}>Cancel</button>
