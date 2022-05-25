@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { fetchPersons, isInputValid, isEmailValid, delay, randomIdGenerator } from '../helper/helper';
+import { fetchPersons, isInputValid, isEmailValid, delay, randomIdGenerator, switchAttribute } from '../helper/helper';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 import { PersonsContext } from '../App';
+import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 export default function AddModal(props) {
     const { setAddClicked, setIsAddedSuccess} = props;
@@ -23,6 +24,7 @@ export default function AddModal(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
+    const [personProperties, setPersonProperties] = useState([]);
 
     const handleOnChangeBooks = (book, index) => {
         const tempArr = favoriteBooks;
@@ -92,7 +94,7 @@ export default function AddModal(props) {
                     console.log("in error if");
                     throw Error('Something wend wrong...');
                 }
-                fetchPersons(setPersons, setErrorMessage, setIsLoading);
+                await fetchPersons(setPersons, setErrorMessage, setIsLoading);
                 setIsLoading(false);
                 setIsAddedSuccess(true);
                 setAddClicked(false);
@@ -104,9 +106,9 @@ export default function AddModal(props) {
     }
 
   return (
-      <>
+    <>
       <section className='modal'>
-      {isLoading && <div className='indication'>Updating data...</div>}
+        {isLoading && <div className='indication'>Updating data...</div>}
 
         {isUpdateSuccess && 
         <section className='indication'>
@@ -118,8 +120,9 @@ export default function AddModal(props) {
         <section className='indication'>
             <div>{errorMessage}</div>
             <button onClick={() => setAddClicked(false)}>close</button>
-        </section>} 
+        </section>}
     
+    <form>
         <div>
             <label for='title'>Title: </label>
             <input 
@@ -252,11 +255,13 @@ export default function AddModal(props) {
             name='comment' 
             onChange={(e) => setComment(e.target.value)} 
             />
-
         </div>
+
         <button onClick={handleSubmit}>Add</button>
         <button onClick={handleCancelClick}>Cancel</button>
+    </form>
+
       </section>
-      </>
+    </>
   )
 }
