@@ -93,7 +93,6 @@ export default function DetailModal(props) {
         <ul>
             {
                 Object.keys(selectedPerson).map((property, index) => {
-                    // const attributeObj = switchAttribute(property);
                     const attributeObj = switchAttribute(property, 
                                         setId, 
                                         setFirstName, 

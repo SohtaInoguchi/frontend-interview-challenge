@@ -63,19 +63,20 @@ export default function AddModal(props) {
                 ) {
                     console.log("valid input");
                     newPerson.id = randomIdGenerator();
-                    newPerson.title = title;
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;
+                    newPerson.favoriteBooks = favoriteBooks;
                     newPerson.email = email
-                    newPerson.birthday = birthday;
                     newPerson.gender = gender;  
+                    newPerson.title = title;
+                    newPerson.birthday = birthday;
+                    newPerson.favoriteColor = favoriteColor;
                     newPerson.address = {country: country,
                                         city: city,
                                         streetName: streetName,
                                         postalCode: postalCode
                                         }
-                    newPerson.favoriteColor = favoriteColor;
-                    newPerson.favoriteBooks = favoriteBooks;
+                    newPerson.comment = comment;
                     console.log(newPerson);
                 }
                 else {
