@@ -26,12 +26,9 @@ function App() {
       {errorMessage && <div className='initial-indication'>{errorMessage}</div>}
       {isLoading && <div className='initial-indication'>Loading data...</div>}
       {!isLoading && 
-      // <>
       <PersonsContext.Provider value={personsContext}>
-        {/* <Table persons={persons} setPersons={setPersons}/>  */}
         <Table /> 
       </PersonsContext.Provider>
-      // </>
       }
     </div>
   );
