@@ -37,9 +37,9 @@
   }
 }
 
-.wrapper {
+/* .wrapper {
   text-align: center;
-}
+} */
 
 .table-rows:hover {
   color: gray;
@@ -48,7 +48,26 @@
 
 #persons-table {
   margin: 10rem auto;
+  border-collapse: collapse;
   border: solid black;
+}
+
+.table-headers {
+  border: solid black;
+  padding: 1rem;
+}
+
+.table-body {
+  border: solid black;
+}
+
+.table-rows {
+  border: solid black;
+}
+
+.table-data {
+  border: solid black;
+  padding: 1rem;
 }
 
 .modal {
@@ -102,7 +121,7 @@
 #add-icon {
   height: 5rem;
   width: 5rem;
-  position: absolute;
-  right: 2rem;
+  position: sticky;
   bottom: 2rem;
+  left: 999999px;
 }

@@ -40,16 +40,16 @@ export default function Table(props) {
         {isLoading && <div className='indication'>Loading data...</div>}
         <thead>
             <tr>
-                {headerNames.map((headerName, i) => <th key={i}>{headerName}</th>)}
+                {headerNames.map((headerName, i) => <th key={i} className="table-headers">{headerName}</th>)}
             </tr>
         </thead>
-        <tbody>
+        <tbody className='table-body'>
             {persons.map(person => 
             <tr onClick={(e) => getDetails(e)} id={person.id} className='table-rows'>
-                <td>{person.id}</td>
-                <td>{person.title}</td>
-                <td>{`${person.firstName} ${person.lastName}`}</td>
-                <td>{person.email}</td>
+                <td className='table-data'>{person.id}</td>
+                <td className='table-data'>{person.title}</td>
+                <td className='table-data'>{`${person.firstName} ${person.lastName}`}</td>
+                <td className='table-data'>{person.email}</td>
             </tr>)}
         </tbody>
     </table>
