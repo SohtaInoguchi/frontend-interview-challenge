@@ -79,6 +79,42 @@ export default function DetailModal(props) {
     const calculateAge = () => {
         return new Date().getFullYear() - new Date(selectedPerson.birthday).getFullYear();
     }
+
+    const renderComment = (attributeObj) => {
+        return (
+            <textarea 
+            id={attributeObj.label} 
+            name={attributeObj.label}
+            rows='5' cols='30'>
+                {selectedPerson.comment}
+            </textarea>
+        )
+    }
+
+    const renderAddressInfo = (attributeObj) => {
+        return (
+            Object.keys(selectedPerson.address).map((addressInfo, index) => {
+                return (
+                    <>
+                    {index === 0 && <div>Address</div>}
+                        <div className='input-fields'>
+                            <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
+                            <input type='text' value={selectedPerson.address[addressInfo]}/>
+                        </div>
+                    </>
+                )
+            })
+        )
+    }
+
+    const renderPersonInfo = (attributeObj, value) => {
+        return (
+            <input 
+            type={attributeObj.inputType} 
+            value={value} 
+            onChange={e => attributeObj.changeHandler(e.target.value)}/>
+        )
+    }
     
   return (
     <>
@@ -124,32 +160,14 @@ export default function DetailModal(props) {
                         return (
                             <>
                                 {property === 'address' ? 
-                                Object.keys(selectedPerson.address).map((addressInfo, index) => {
-                                    return (
-                                        <>
-                                        {index === 0 && <div>Address</div>}
-                                            <div className='input-fields'>
-                                                <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
-                                                <input type='text' value={selectedPerson.address[addressInfo]}/>
-                                            </div>
-                                        </>
-                                    )
-                                })
+                                renderAddressInfo(attributeObj)
                                 :
                                 <div className='input-fields'>
                                 <label key={index} for={attributeObj.label}>{`${attributeObj.label}: `}</label>
                                 {property === 'comment' ? 
-                                <textarea 
-                                id={attributeObj.label} 
-                                name={attributeObj.label}
-                                rows='5' cols='30'>
-                                    {selectedPerson.comment}
-                                </textarea>
-                                :                                
-                                <input 
-                                    type={attributeObj.inputType} 
-                                    value={value} 
-                                    onChange={e => attributeObj.changeHandler(e.target.value)}/>
+                                renderComment(attributeObj)
+                                :   
+                                renderPersonInfo(attributeObj, value)                             
                                 }
                                 {property === 'birthday' && 
                                 <div>{`${calculateAge()} years old`}</div>}
