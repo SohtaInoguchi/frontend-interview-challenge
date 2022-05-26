@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import DetailModal from './DetailModal';
 import { delay } from '../helper/helper';
 import { IoMdAddCircle } from 'react-icons/io';
 import AddModal from './AddModal';
+import { PersonsContext } from '../App';
 
 export default function Table(props) {
-    const { persons, setPersons } = props;
+    const { persons } = useContext(PersonsContext);
     const headerNames = ['ID', 'Title', 'Name', 'Email'];
     const [selectedPerson, setSelectedPerson] = useState({});
     const [isSelected, setIsSelected] = useState(false);
@@ -35,20 +36,20 @@ export default function Table(props) {
   return (
     <>
     <table id='persons-table'>
-        {errorMessage && <div className='indication'>{errorMessage}</div>}
-        {isLoading && <div className='indication'>Loading data...</div>}
+    {errorMessage && <div className='indication'>{errorMessage}</div>}
+    {isLoading && <div className='indication'>Loading data...</div>}
         <thead>
             <tr>
-                {headerNames.map((headerName, i) => <th key={i}>{headerName}</th>)}
+                {headerNames.map((headerName, i) => <th key={i} className="table-headers">{headerName}</th>)}
             </tr>
         </thead>
-        <tbody>
+        <tbody className='table-body'>
             {persons.map(person => 
             <tr onClick={(e) => getDetails(e)} id={person.id} className='table-rows'>
-                <td>{person.id}</td>
-                <td>{person.title}</td>
-                <td>{`${person.firstName} ${person.lastName}`}</td>
-                <td>{person.email}</td>
+                <td className='table-data'>{person.id}</td>
+                <td className='table-data'>{person.title}</td>
+                <td className='table-data'>{`${person.firstName} ${person.lastName}`}</td>
+                <td className='table-data'>{person.email}</td>
             </tr>)}
         </tbody>
     </table>
@@ -63,10 +64,6 @@ export default function Table(props) {
     {isAddClicked && 
     <AddModal
         selectedPerson={selectedPerson} 
-        persons={persons} 
-        setPersons={setPersons}
-        setIsSelected={setIsSelected}
-        isSelected={isSelected}
         setAddClicked={setAddClicked}
         setIsAddedSuccess={setIsAddedSuccess}
         isLoading={isLoading}    
@@ -74,10 +71,7 @@ export default function Table(props) {
     {!isLoading && isSelected &&
     <DetailModal 
         selectedPerson={selectedPerson} 
-        persons={persons} 
-        setPersons={setPersons}
         setIsSelected={setIsSelected}
-        isSelected={isSelected}
         isLoading={isLoading}
         />}
     </>
