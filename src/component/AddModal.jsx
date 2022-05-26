@@ -63,7 +63,6 @@ export default function AddModal(props) {
                 && 
                 isEmailValid(email)
                 ) {
-                    console.log("valid input");
                     newPerson.id = randomIdGenerator();
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;
@@ -79,23 +78,18 @@ export default function AddModal(props) {
                                         postalCode: postalCode
                                         }
                     newPerson.comment = comment;
-                    console.log(newPerson);
                 }
                 else {
                     alert("Please fill all the field besides Comment");
-                    console.log("input invalid");
                     setIsLoading(false);
                     return;
                 }
                 const response = await axios.post(`http://localhost:3000/persons`, newPerson);
-                const responsePersons = await axios.get('http://localhost:3000/persons');
                 await delay(2000);
-                if (response.statusText !== 'OK' || responsePersons.statusText !== 'OK') {
-                    console.log("in error if");
+                if (response.statusText !== 'OK') {
                     throw Error('Something wend wrong...');
                 }
                 fetchPersons(setPersons, setErrorMessage, setIsLoading);
-                setIsLoading(false);
                 setIsAddedSuccess(true);
                 setAddClicked(false);
         } catch (err) {

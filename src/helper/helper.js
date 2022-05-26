@@ -38,7 +38,6 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
 
   export const isEmailValid = (email) => {
     const mailFormat = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-    console.log(email.match(mailFormat));
     if (email.match(mailFormat)) {
       return true;
     }
@@ -48,7 +47,6 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
   
   export const randomIdGenerator = () => {
     const randomNumber = Math.floor(Math.random() * 10000);
-    console.log(randomNumber);
     const id = `6ad313a7d${randomNumber}`;
     return id;
   }

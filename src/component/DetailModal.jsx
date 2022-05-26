@@ -41,9 +41,7 @@ export default function DetailModal(props) {
                 if (person.id === updatedPerson.id) {
                     return updatedPerson;
                 }
-                else {
-                    return person;
-                }
+                return person;
             })
             setPersons(updatedPersons);
             setIsUpdateSuccess(true);
@@ -58,7 +56,6 @@ export default function DetailModal(props) {
             e.preventDefault();
             setIsLoading(true);
             const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
-            const responsePersons = await axios.get('http://localhost:3000/persons');
             await delay(2000);
             fetchPersons(setPersons, setErrorMessage, setIsLoading);
             setIsSelected(false);
@@ -90,11 +87,16 @@ export default function DetailModal(props) {
     const renderAddressInfo = (attributeObj) => {
         return (
             Object.keys(selectedPerson.address).map((addressInfo, index) => {
+                const label = addressInfo === 'country' ? 
+                "Country" : addressInfo === 'streetName' ? 
+                'Street Name' : addressInfo === 'postalCode' ? 
+                'Postal Code' : 'City';
                 return (
                     <>
                     {index === 0 && <div>Address</div>}
                         <div className='input-fields'>
-                            <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
+                            {/* <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label> */}
+                            <label key={index} for={label}>{`${label}: `}</label>
                             <input type='text' value={selectedPerson.address[addressInfo]}/>
                         </div>
                     </>
@@ -142,7 +144,7 @@ export default function DetailModal(props) {
                                             setBirthday,
                                             setFavoriteColor,
                                             setComment);
-                        const value = property === 'id' ? id : 
+                        const inputValue = property === 'id' ? id : 
                                     property === 'firstName' ? firstName :
                                     property === 'lastName' ? lastName : 
                                     property === 'favoriteBooks' ? favoriteBooks : 
@@ -163,7 +165,7 @@ export default function DetailModal(props) {
                                 {property === 'comment' ? 
                                 renderComment(attributeObj)
                                 :   
-                                renderPersonInfo(attributeObj, value)                             
+                                renderPersonInfo(attributeObj, inputValue)                             
                                 }
                                 {property === 'birthday' && 
                                 <div>{`${calculateAge()} years old`}</div>}
