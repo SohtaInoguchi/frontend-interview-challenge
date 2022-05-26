@@ -37,8 +37,9 @@
   }
 }
 
-/* .wrapper {
-} */
+.wrapper {
+  width: 100%;
+}
 
 .table-rows:hover {
   color: gray;
@@ -73,7 +74,8 @@
   display: block;
   border: solid black;
   top: 1rem;
-  left: 35%;
+  left: 50%;
+  transform: translateX(-50%);
   position: fixed;
   z-index: 1;
   width: min-content;
@@ -83,7 +85,7 @@
 }
 
 .modal-form {
-  position: fixed;
+  /* position: fixed; */
   border: solid black;
   padding: 2rem;
   width: min-content;
@@ -124,7 +126,8 @@
   padding: 4rem;
   position: fixed;
   top: 50%;
-  left: 25%;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
   width: min-content;
   min-width: 20rem;
