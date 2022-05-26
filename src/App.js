@@ -25,7 +25,7 @@ function App() {
     <div className='wrapper'>
       {errorMessage && <div className='initial-indication'>{errorMessage}</div>}
       {isLoading && <div className='initial-indication'>Loading data...</div>}
-      {!isLoading && 
+      {!isLoading && persons.length &&
       <PersonsContext.Provider value={personsContext}>
         <Table /> 
       </PersonsContext.Provider>
