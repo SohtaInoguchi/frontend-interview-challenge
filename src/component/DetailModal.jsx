@@ -21,7 +21,6 @@ export default function DetailModal(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
-    const [backgroundColor, setBackgroundColor] = useState(selectedPerson.favoriteColor);
 
     const updatePersonInfo = async (e) => {
         try {
@@ -115,7 +114,7 @@ export default function DetailModal(props) {
     
   return (
     <>
-        <section className='modal' style={{backgroundColor: backgroundColor}}>
+        <section className='modal' style={{backgroundColor: selectedPerson.favoriteColor}}>
             {isLoading && 
             <div className='indication'>Updating data...</div>}
             {isUpdateSuccess && 
