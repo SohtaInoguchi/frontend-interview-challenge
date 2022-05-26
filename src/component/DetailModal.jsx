@@ -173,9 +173,11 @@ export default function DetailModal(props) {
                         )
                     })
                 }
-                <button onClick={updatePersonInfo}>Update</button>
-                <button onClick={deletePerson}>Delete</button>
-                <button onClick={handleCancelClick}>Cancel</button>
+                <div className='modal-buttons'>
+                    <button onClick={deletePerson} className='buttons' id='delete-button'>Delete</button>
+                    <button onClick={updatePersonInfo} className='buttons'>Update</button>
+                    <button onClick={handleCancelClick} className='buttons'>Cancel</button>
+                </div>
             </form>
       </section>
     </>
