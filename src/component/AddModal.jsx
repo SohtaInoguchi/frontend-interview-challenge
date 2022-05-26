@@ -68,7 +68,7 @@ export default function AddModal(props) {
                     newPerson.id = randomIdGenerator();
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;
-                    newPerson.favoriteBooks = favoriteBooks;
+                    newPerson.favoriteBooks = favoriteBooks.filter(book => book !== '');
                     newPerson.email = email
                     newPerson.gender = gender;  
                     newPerson.title = title;

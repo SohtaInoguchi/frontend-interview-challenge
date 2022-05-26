@@ -28,7 +28,7 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
   };
 
   export const isInputValid = (title, firstName, lastName, birthday, gender, country, streetName, city, postalCode, favoriteColor, favoriteBooks) => {
-    if (title.length > 1 && firstName && lastName && birthday && gender && country && streetName && city && postalCode && favoriteColor && favoriteBooks[favoriteBooks.length - 1]) {
+    if (title.length > 1 && firstName && lastName && birthday && gender && country && streetName && city && postalCode && favoriteColor && favoriteBooks[0]) {
       return true;
     }
     return false;
