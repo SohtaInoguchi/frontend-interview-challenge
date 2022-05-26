@@ -262,8 +262,10 @@ export default function AddModal(props) {
                 onChange={(e) => setComment(e.target.value)} 
                 />
             </div>
-            <button onClick={handleSubmit}>Add</button>
-            <button onClick={handleCancelClick}>Cancel</button>
+            <div className='add-modal-buttons'>
+                <button onClick={handleSubmit} className='buttons'>Add</button>
+                <button onClick={handleCancelClick} className='buttons'>Cancel</button>
+            </div>
         </form>
 
       </section>

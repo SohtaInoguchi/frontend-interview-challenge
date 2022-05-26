@@ -113,6 +113,11 @@
   justify-content: start;
 }
 
+.add-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .buttons {
   padding: 0.5rem 0.5rem;
   margin: 0 0.3rem
