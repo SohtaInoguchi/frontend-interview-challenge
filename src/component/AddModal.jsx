@@ -23,7 +23,6 @@ export default function AddModal(props) {
     const [comment, setComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
 
     const handleOnChangeBooks = (book, index) => {
         const tempArr = favoriteBooks;
@@ -84,11 +83,8 @@ export default function AddModal(props) {
                     setIsLoading(false);
                     return;
                 }
-                const response = await axios.post(`http://localhost:3000/persons`, newPerson);
                 await delay(2000);
-                if (response.statusText !== 'OK') {
-                    throw Error('Something wend wrong...');
-                }
+                const response = await axios.post(`http://localhost:3000/persons`, newPerson);
                 fetchPersons(setPersons, setErrorMessage, setIsLoading);
                 setIsAddedSuccess(true);
                 setAddClicked(false);
@@ -103,12 +99,6 @@ export default function AddModal(props) {
     <>
       <section className='modal'>
         {isLoading && <div className='indication'>Updating data...</div>}
-
-        {isUpdateSuccess && 
-        <section className='indication'>
-            <h3>Update success</h3>
-            <button onClick={() => setAddClicked(false)}>close</button>
-        </section>}
 
         {errorMessage && 
         <section className='indication'>

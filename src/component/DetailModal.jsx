@@ -26,16 +26,13 @@ export default function DetailModal(props) {
         try {
             e.preventDefault();
             setIsLoading(true);
+            await delay(2000);
             const response = await axios.patch(`http://localhost:3000/persons/${selectedPerson.id}`, {
                     firstName: firstName,
                     lastName: lastName,
                     birthday: birthday,
                     comment: comment
-                });
-            await delay(2000);
-                if (response.statusText !== 'OK') {
-                    throw Error('Something went wrong...');
-                }
+            });
             const updatedPerson = response.data;
             const updatedPersons = persons.map(person => {
                 if (person.id === updatedPerson.id) {
@@ -47,6 +44,7 @@ export default function DetailModal(props) {
             setIsUpdateSuccess(true);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
+            setIsLoading(false);
             setErrorMessage(err.message);
         }
     }
@@ -55,11 +53,13 @@ export default function DetailModal(props) {
         try {
             e.preventDefault();
             setIsLoading(true);
-            const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
             await delay(2000);
+            const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
             fetchPersons(setPersons, setErrorMessage, setIsLoading);
             setIsSelected(false);
         } catch (err) {
+            setIsLoading(false);
+            setErrorMessage(err.message);
             console.error(`Error occurred: ${err.message}`);
         }
     }

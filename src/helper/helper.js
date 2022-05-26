@@ -7,20 +7,12 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
       let page = 1;
       let response = await axios.get(`http://localhost:3000/persons?page=${page}`);
       let personsArr = response.data.results;
-      if (response.statusText !== 'OK') {
-        throw Error('Something went wrong...');
+      while (response.data.hasNextPage) {
+        page++;
+        response = await axios.get(`http://localhost:3000/persons?page=${page}`);
+        personsArr = personsArr.concat(response.data.results);
       }
-      else {
-        while (response.data.hasNextPage) {
-          page++;
-          response = await axios.get(`http://localhost:3000/persons?page=${page}`);
-          if (response.statusText !== 'OK') {
-            throw Error('Something went wrong...');
-          }
-          personsArr = personsArr.concat(response.data.results);
-        }
-        setPersons(personsArr);
-      }
+      setPersons(personsArr);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);

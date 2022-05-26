@@ -21,8 +21,8 @@ export default function Table(props) {
             e.preventDefault();
             setIsLoading(true);
             const selectedUserId = e.currentTarget.id;
-            const response = await axios.get(`http://localhost:3000/persons/${selectedUserId}`)
             await delay(2000);
+            const response = await axios.get(`http://localhost:3000/persons/${selectedUserId}`)
             setSelectedPerson(response.data);
             setIsSelected(true);
             setIsLoading(false);
