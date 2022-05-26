@@ -172,6 +172,7 @@ export default function AddModal(props) {
                     <option value='Genderfluid'>Genderfluid</option>
                 </select>
             </div>
+            <p>Address</p>
             <div className='input-fields'>
                 <label for='country'>Country: </label>
                 <input 
