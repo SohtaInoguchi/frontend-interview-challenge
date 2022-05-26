@@ -85,7 +85,6 @@
 }
 
 .modal-form {
-  /* position: fixed; */
   border: solid black;
   padding: 2rem;
   width: min-content;
@@ -98,6 +97,10 @@
   display: flex;
   justify-content: flex-start;
   padding: 0.5rem 0.5rem;
+}
+
+.input-fields-books {
+  display: block;
 }
 
 #add-form {

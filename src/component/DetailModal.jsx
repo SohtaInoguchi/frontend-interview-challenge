@@ -75,6 +75,10 @@ export default function DetailModal(props) {
         e.preventDefault();
         setIsSelected(false);
     }
+
+    const calculateAge = () => {
+        return new Date().getFullYear() - new Date(selectedPerson.birthday).getFullYear();
+    }
     
   return (
     <>
@@ -141,12 +145,14 @@ export default function DetailModal(props) {
                                 rows='5' cols='30'>
                                     {selectedPerson.comment}
                                 </textarea>
-                                :
+                                :                                
                                 <input 
                                     type={attributeObj.inputType} 
                                     value={value} 
                                     onChange={e => attributeObj.changeHandler(e.target.value)}/>
                                 }
+                                {property === 'birthday' && 
+                                <div>{`${calculateAge()} years old`}</div>}
                                 </div>
                                 }
                             </>
