@@ -38,7 +38,7 @@
 }
 
 .wrapper {
-  text-align: center;
+  width: 100%;
 }
 
 .table-rows:hover {
@@ -48,14 +48,34 @@
 
 #persons-table {
   margin: 10rem auto;
+  border-collapse: collapse;
   border: solid black;
+}
+
+.table-headers {
+  border: solid black;
+  padding: 1rem;
+}
+
+.table-body {
+  border: solid black;
+}
+
+.table-rows {
+  border: solid black;
+}
+
+.table-data {
+  border: solid black;
+  padding: 1rem;
 }
 
 .modal {
   display: block;
   border: solid black;
-  top: 10%;
-  left: 20%;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
   position: fixed;
   z-index: 1;
   width: min-content;
@@ -64,19 +84,40 @@
   background-color: rgb(255,255,255); 
 }
 
+.modal-form {
+  border: solid black;
+  padding: 2rem;
+  width: min-content;
+  min-width: 20rem;
+  height: min-content;
+  background-color: inherit;
+}
+
+.input-fields {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5rem 0.5rem;
+}
+
+.input-fields-books {
+  display: block;
+}
+
 #add-form {
   width: 20rem;
   height: auto;
 }
 
 .initial-indication {
-  margin: 10rem auto;
   display: inline-block;
   border: solid black;
+  padding: 4rem;
+  position: fixed;
+  top: 50%;
+  left: 25%;
   width: min-content;
-  min-width: 10rem;
-  height: auto;
-  min-height: 3rem;
+  min-width: 20rem;
+  height: min-content;
   text-align: center;
   vertical-align: middle;
   background-color: white;
@@ -85,16 +126,15 @@
 .indication {
   display: inline-block;
   border: solid black;
-  position: absolute;
-  top: 25%;
-  bottom: 25%;
-  right: 25%;
-  left: 25%;
+  padding: 4rem;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 2;
-  width: auto;
-  min-width: 3rem;
-  height: auto;
-  min-height: 10px;
+  width: min-content;
+  min-width: 20rem;
+  height: min-content;
   text-align: center;
   background-color: white;
 }
@@ -102,7 +142,7 @@
 #add-icon {
   height: 5rem;
   width: 5rem;
-  position: absolute;
-  right: 2rem;
+  position: sticky;
   bottom: 2rem;
+  left: 999999px;
 }

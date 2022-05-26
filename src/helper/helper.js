@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const delay= ms => new Promise(resolve => setTimeout(resolve, ms));
+
 export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) => {
     try {
       let page = 1;
@@ -28,7 +30,7 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
   };
 
   export const isInputValid = (title, firstName, lastName, birthday, gender, country, streetName, city, postalCode, favoriteColor, favoriteBooks) => {
-    if (title.length > 1 && firstName && lastName && birthday && gender && country && streetName && city && postalCode && favoriteColor && favoriteBooks[favoriteBooks.length - 1]) {
+    if (title.length > 1 && firstName && lastName && birthday && gender && country && streetName && city && postalCode && favoriteColor && favoriteBooks[0]) {
       return true;
     }
     return false;
@@ -43,8 +45,7 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
     return false;
   }
 
-  export const delay= ms => new Promise(resolve => setTimeout(resolve, ms));
-
+  
   export const randomIdGenerator = () => {
     const randomNumber = Math.floor(Math.random() * 10000);
     console.log(randomNumber);

@@ -7,7 +7,7 @@ import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 export default function AddModal(props) {
     const { setAddClicked, setIsAddedSuccess} = props;
-    const { persons, setPersons } = useContext(PersonsContext);
+    const { setPersons } = useContext(PersonsContext);
     const [title, setTitle] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -24,7 +24,6 @@ export default function AddModal(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
-    const [personProperties, setPersonProperties] = useState([]);
 
     const handleOnChangeBooks = (book, index) => {
         const tempArr = favoriteBooks;
@@ -32,7 +31,8 @@ export default function AddModal(props) {
         setFavoriteBooks([...tempArr]);
     }
     
-    const addAnotherInput = () => {
+    const addAnotherInput = (e) => {
+        e.preventDefault();
         const tempArr = favoriteBooks;
         tempArr.push('');
         setFavoriteBooks([...tempArr]);
@@ -67,7 +67,7 @@ export default function AddModal(props) {
                     newPerson.id = randomIdGenerator();
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;
-                    newPerson.favoriteBooks = favoriteBooks;
+                    newPerson.favoriteBooks = favoriteBooks.filter(book => book !== '');
                     newPerson.email = email
                     newPerson.gender = gender;  
                     newPerson.title = title;
@@ -94,7 +94,7 @@ export default function AddModal(props) {
                     console.log("in error if");
                     throw Error('Something wend wrong...');
                 }
-                await fetchPersons(setPersons, setErrorMessage, setIsLoading);
+                fetchPersons(setPersons, setErrorMessage, setIsLoading);
                 setIsLoading(false);
                 setIsAddedSuccess(true);
                 setAddClicked(false);
@@ -122,144 +122,148 @@ export default function AddModal(props) {
             <button onClick={() => setAddClicked(false)}>close</button>
         </section>}
     
-    <form>
-        <div>
-            <label for='title'>Title: </label>
-            <input 
-            type='text' 
-            value={title} 
-            name='title' 
-            id='title' 
-            onChange={(e) =>setTitle(e.target.value)} 
-            required/>
-        </div>
-        <div>
-            <label for='firstName'>First Name: </label>
-            <input 
-            type='text' 
-            value={firstName} 
-            name='firstName' 
-            id='firstName' 
-            onChange={(e) => setFirstName(e.target.value)} 
-            required/>
-        </div>
-            <label for='lastName'>Last Name: </label>
-            <input 
-            type='text' 
-            value={lastName} 
-            name='lastName' 
-            id='lastName' 
-            onChange={(e) => setLastName(e.target.value)} 
-            required/>
-        <div>
-            <label for='email'>email: </label>
-            <input 
-            type='email' 
-            value={email} 
-            name='email' 
-            id='email' 
-            onChange={(e) => setEmail(e.target.value)} 
-            required/>
-        </div>
-        <div>
-            <label for='gender'>Gender: </label>
-            <select name='gender' id='gender-input' onChange={(e) => setGender(e.target.value)}>
-                <option value=''>Please select your gender</option>
-                <option value='Male'>Male</option>
-                <option value='Female'>Female</option>
-                <option value='Genderfluid'>Genderfluid</option>
-            </select>
-        </div>
-            <label for='country'>Country: </label>
-            <input 
-            type='text' 
-            value={country} 
-            name='country' 
-            id='country' 
-            onChange={(e) => setCountry(e.target.value)} 
-            required/>
-        <div>
-            <label for='streetName'>Street Name: </label>
-            <input 
-            type='text' 
-            value={streetName} 
-            name='streetName' 
-            id='streetName' 
-            onChange={(e) => setStreetName(e.target.value)} 
-            required/>
-        </div>
-        <div>
-            <label for='city'>City: </label>
-            <input 
-            type='text' 
-            value={city} 
-            name='city' 
-            id='city' 
-            onChange={(e) => setCity(e.target.value)} 
-            required/>
-        </div>
+        <form className='modal-form'>
+            <div className='input-fields'>
+                <label for='title'>Title: </label>
+                <input 
+                type='text' 
+                value={title} 
+                name='title' 
+                id='title' 
+                onChange={(e) =>setTitle(e.target.value)} 
+                required/>
+            </div>
+            <div className='input-fields'>
+                <label for='firstName'>First Name: </label>
+                <input 
+                type='text' 
+                value={firstName} 
+                name='firstName' 
+                id='firstName' 
+                onChange={(e) => setFirstName(e.target.value)} 
+                required/>
+            </div>
+            <div className='input-fields'>
+                <label for='lastName'>Last Name: </label>
+                <input 
+                type='text' 
+                value={lastName} 
+                name='lastName' 
+                id='lastName' 
+                onChange={(e) => setLastName(e.target.value)} 
+                required/>
+            </div>
+            <div className='input-fields'>
+                <label for='email'>email: </label>
+                <input 
+                type='email' 
+                value={email} 
+                name='email' 
+                id='email' 
+                onChange={(e) => setEmail(e.target.value)} 
+                required/>
+            </div>
+            <div className='input-fields'>
+                <label for='gender'>Gender: </label>
+                <select name='gender' id='gender-input' onChange={(e) => setGender(e.target.value)}>
+                    <option value=''>Please select your gender</option>
+                    <option value='Male'>Male</option>
+                    <option value='Female'>Female</option>
+                    <option value='Genderfluid'>Genderfluid</option>
+                </select>
+            </div>
+            <div className='input-fields'>
+                <label for='country'>Country: </label>
+                <input 
+                type='text' 
+                value={country} 
+                name='country' 
+                id='country' 
+                onChange={(e) => setCountry(e.target.value)} 
+                required/>
+            </div>
+            <div className='input-fields'>
+                <label for='streetName'>Street Name: </label>
+                <input 
+                type='text' 
+                value={streetName} 
+                name='streetName' 
+                id='streetName' 
+                onChange={(e) => setStreetName(e.target.value)} 
+                required/>
+            </div>
+            <div className='input-fields'>
+                <label for='city'>City: </label>
+                <input 
+                type='text' 
+                value={city} 
+                name='city' 
+                id='city' 
+                onChange={(e) => setCity(e.target.value)} 
+                required/>
+            </div>
 
-        <div>
-            <label for='postalCode'>Postal code: </label>
-            <input 
-            type='text' 
-            value={postalCode} 
-            name='postalCode' 
-            id='postalCode' 
-            onChange={(e) => setPostalCode(e.target.value)} 
-            required/>
-        </div>
+            <div className='input-fields'>
+                <label for='postalCode'>Postal code: </label>
+                <input 
+                type='text' 
+                value={postalCode} 
+                name='postalCode' 
+                id='postalCode' 
+                onChange={(e) => setPostalCode(e.target.value)} 
+                required/>
+            </div>
 
-        <div>
-            <label for='favoriteBooks'>Favorite books: </label>
-            {
+            <div>
+                <label for='favoriteBooks' className='input-fields-books'>Favorite books: </label>
+                {
                 favoriteBooks.map((book, index) => {
-                    return <input 
-                            type='text' 
-                            value={favoriteBooks[index]} 
-                            onChange={(e) => handleOnChangeBooks(e.target.value, index)}
-                            />
-                })
-            }
-            <button onClick={addAnotherInput}>Add another book</button>            
-        </div>
+                        return <input 
+                                type='text' 
+                                value={favoriteBooks[index]} 
+                                onChange={(e) => handleOnChangeBooks(e.target.value, index)}
+                                className='input-fields-books'
+                                />
+                    })
+                }
+                <button onClick={addAnotherInput}>Add another book</button>            
+            </div>
 
-        <div>
-            <label for='birthday'>Birthday: </label>
-            <input 
-            type='date' 
-            value={birthday} 
-            name='birthday' 
-            id='birthday' 
-            onChange={(e) => setBirthday(e.target.value)} 
-            required/>
-        </div>
+            <div className='input-fields'>
+                <label for='birthday'>Birthday: </label>
+                <input 
+                type='date' 
+                value={birthday} 
+                name='birthday' 
+                id='birthday' 
+                onChange={(e) => setBirthday(e.target.value)} 
+                required/>
+            </div>
 
-        <div>
-            <label for='favoriteColor'>Favorite Color: </label>
-            <input 
-            type='color' 
-            value={favoriteColor} 
-            name='favoriteColor' 
-            id='favoriteColor' 
-            onChange={(e) => setFavoriteColor(e.target.value)} 
-            required/>
-        </div>
+            <div className='input-fields'>
+                <label for='favoriteColor'>Favorite Color: </label>
+                <input 
+                type='color' 
+                value={favoriteColor} 
+                name='favoriteColor' 
+                id='favoriteColor' 
+                onChange={(e) => setFavoriteColor(e.target.value)} 
+                required/>
+            </div>
 
-        <div>
-            <label for='comment'>Comment: </label>
-            <input 
-            type='text' 
-            value={comment} 
-            id='comment'
-            name='comment' 
-            onChange={(e) => setComment(e.target.value)} 
-            />
-        </div>
-
-        <button onClick={handleSubmit}>Add</button>
-        <button onClick={handleCancelClick}>Cancel</button>
-    </form>
+            <div className='input-fields'>
+                <label for='comment'>Comment: </label>
+                <input 
+                type='text' 
+                value={comment} 
+                id='comment'
+                name='comment' 
+                onChange={(e) => setComment(e.target.value)} 
+                />
+            </div>
+            <button onClick={handleSubmit}>Add</button>
+            <button onClick={handleCancelClick}>Cancel</button>
+        </form>
 
       </section>
     </>
