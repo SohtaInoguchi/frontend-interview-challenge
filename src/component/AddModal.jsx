@@ -254,13 +254,15 @@ export default function AddModal(props) {
 
             <div className='input-fields'>
                 <label for='comment'>Comment: </label>
-                <input 
+                <textarea 
                 type='text' 
                 value={comment} 
                 id='comment'
                 name='comment' 
-                onChange={(e) => setComment(e.target.value)} 
-                />
+                onChange={(e) => setComment(e.target.value)}
+                rows='5' cols='30'>
+                    {comment}
+                </textarea>
             </div>
             <div className='add-modal-buttons'>
                 <button onClick={handleSubmit} className='buttons'>Add</button>
