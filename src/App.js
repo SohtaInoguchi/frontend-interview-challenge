@@ -1,10 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
 import { useState, useEffect, createContext, useMemo } from 'react';
 import Table from './component/Table';
 import { fetchPersons } from './helper/helper';
-import { IoMdAddCircle } from 'react-icons/io';
 
 export const PersonsContext = createContext(null);
 
@@ -25,7 +23,7 @@ function App() {
     <div className='wrapper'>
       {errorMessage && <div className='initial-indication'>{errorMessage}</div>}
       {isLoading && <div className='initial-indication'>Loading data...</div>}
-      {!isLoading && persons.length &&
+      {!isLoading && persons.length > 0 &&
       <PersonsContext.Provider value={personsContext}>
         <Table /> 
       </PersonsContext.Provider>

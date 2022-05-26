@@ -13,9 +13,6 @@ export default function DetailModal(props) {
     const [favoriteBooks, setFavoriteBooks] = useState(selectedPerson.favoriteBooks);
     const [email, setEmail] = useState(selectedPerson.email);
     const [gender, setGender] = useState(selectedPerson.gender);
-    const [country, setCountry] = useState(selectedPerson.address.country);
-    const [streetName, setStreetName] = useState(selectedPerson.address.streetName);
-    const [city, setCity] = useState(selectedPerson.address.city);
     const [title, setTitle] = useState(selectedPerson.title);
     const [birthday, setBirthday] = useState(selectedPerson.birthday);
     const [favoriteColor, setFavoriteColor] = useState(selectedPerson.favoriteColor);
@@ -50,11 +47,9 @@ export default function DetailModal(props) {
                 }
             })
             setPersons(updatedPersons);
-            setIsLoading(false);
             setIsUpdateSuccess(true);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
-            setIsLoading(false);
             setErrorMessage(err.message);
         }
     }
@@ -62,8 +57,10 @@ export default function DetailModal(props) {
     const deletePerson = async (e) => {
         try {
             e.preventDefault();
+            setIsLoading(true);
             const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
             const responsePersons = await axios.get('http://localhost:3000/persons');
+            await delay(2000);
             fetchPersons(setPersons, setErrorMessage, setIsLoading);
             setIsSelected(false);
         } catch (err) {

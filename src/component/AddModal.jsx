@@ -7,7 +7,7 @@ import { setSelectionRange } from '@testing-library/user-event/dist/utils';
 
 export default function AddModal(props) {
     const { setAddClicked, setIsAddedSuccess} = props;
-    const { persons, setPersons } = useContext(PersonsContext);
+    const { setPersons } = useContext(PersonsContext);
     const [title, setTitle] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -24,7 +24,6 @@ export default function AddModal(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
-    const [personProperties, setPersonProperties] = useState([]);
 
     const handleOnChangeBooks = (book, index) => {
         const tempArr = favoriteBooks;
@@ -95,7 +94,7 @@ export default function AddModal(props) {
                     console.log("in error if");
                     throw Error('Something wend wrong...');
                 }
-                await fetchPersons(setPersons, setErrorMessage, setIsLoading);
+                fetchPersons(setPersons, setErrorMessage, setIsLoading);
                 setIsLoading(false);
                 setIsAddedSuccess(true);
                 setAddClicked(false);
