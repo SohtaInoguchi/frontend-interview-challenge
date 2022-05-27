@@ -205,7 +205,8 @@ export default function AddModal(props) {
                 <label htmlFor='favoriteBooks' className='input-fields-books'>Favorite books: </label>
                 {
                 favoriteBooks.map((book, index) => {
-                        return <input 
+                        return <input
+                                key={index} 
                                 type='text' 
                                 value={favoriteBooks[index]} 
                                 onChange={(e) => handleOnChangeBooks(e.target.value, index)}

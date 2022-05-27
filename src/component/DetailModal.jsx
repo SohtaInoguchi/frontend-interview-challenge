@@ -92,14 +92,13 @@ export default function DetailModal(props) {
                 'Street Name' : addressInfo === 'postalCode' ? 
                 'Postal Code' : 'City';
                 return (
-                    <>
+                    <div key={index}>
                     {index === 0 && <div>Address</div>}
                         <div className='input-fields'>
-                            <label key={index} htmlFor={label}>{`${label}: `}</label>
-                            {/* <input type='text' value={selectedPerson.address[addressInfo]}/> */}
+                            <label htmlFor={label}>{`${label}: `}</label>
                             <input type='text' defaultValue={selectedPerson.address[addressInfo]}/>
                         </div>
-                    </>
+                    </div>
                 )
             })
         )
@@ -159,12 +158,13 @@ export default function DetailModal(props) {
                                     property === 'comment' ? comment : 
                                     'No info';
                         return (
-                            <>
+                            <div key={index}>
                                 {property === 'address' ? 
                                 renderAddressInfo(attributeObj)
                                 :
                                 <div className='input-fields'>
-                                <label key={index} htmlFor={attributeObj.label}>{`${attributeObj.label}: `}</label>
+                                {/* <label key={index} htmlFor={attributeObj.label}>{`${attributeObj.label}: `}</label> */}
+                                <label htmlFor={attributeObj.label}>{`${attributeObj.label}: `}</label>
                                 {property === 'comment' ? 
                                 renderComment(attributeObj)
                                 :   
@@ -174,7 +174,7 @@ export default function DetailModal(props) {
                                 <div>{`${calculateAge()} years old`}</div>}
                                 </div>
                                 }
-                            </>
+                            </div>
                         )
                     })
                 }
