@@ -108,6 +108,25 @@
   height: auto;
 }
 
+.modal-buttons {
+  display: flex;
+  justify-content: start;
+}
+
+.add-modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.buttons {
+  padding: 0.5rem 0.5rem;
+  margin: 0 0.3rem
+}
+
+#delete-button {
+  margin-right: auto;
+}
+
 .initial-indication {
   display: inline-block;
   border: solid black;

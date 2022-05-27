@@ -26,29 +26,25 @@ export default function DetailModal(props) {
         try {
             e.preventDefault();
             setIsLoading(true);
+            await delay(2000);
             const response = await axios.patch(`http://localhost:3000/persons/${selectedPerson.id}`, {
                     firstName: firstName,
                     lastName: lastName,
                     birthday: birthday,
                     comment: comment
-                });
-            await delay(2000);
-                if (response.statusText !== 'OK') {
-                    throw Error('Something went wrong...');
-                }
+            });
             const updatedPerson = response.data;
             const updatedPersons = persons.map(person => {
                 if (person.id === updatedPerson.id) {
                     return updatedPerson;
                 }
-                else {
-                    return person;
-                }
+                return person;
             })
             setPersons(updatedPersons);
             setIsUpdateSuccess(true);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
+            setIsLoading(false);
             setErrorMessage(err.message);
         }
     }
@@ -57,12 +53,13 @@ export default function DetailModal(props) {
         try {
             e.preventDefault();
             setIsLoading(true);
-            const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
-            const responsePersons = await axios.get('http://localhost:3000/persons');
             await delay(2000);
+            const responseDelete = await axios.delete(`http://localhost:3000/persons/${selectedPerson.id}`);
             fetchPersons(setPersons, setErrorMessage, setIsLoading);
             setIsSelected(false);
         } catch (err) {
+            setIsLoading(false);
+            setErrorMessage(err.message);
             console.error(`Error occurred: ${err.message}`);
         }
     }
@@ -81,8 +78,9 @@ export default function DetailModal(props) {
             <textarea 
             id={attributeObj.label} 
             name={attributeObj.label}
-            rows='5' cols='30'>
-                {selectedPerson.comment}
+            rows='5' cols='30'
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}>
             </textarea>
         )
     }
@@ -90,14 +88,18 @@ export default function DetailModal(props) {
     const renderAddressInfo = (attributeObj) => {
         return (
             Object.keys(selectedPerson.address).map((addressInfo, index) => {
+                const label = addressInfo === 'country' ? 
+                "Country" : addressInfo === 'streetName' ? 
+                'Street Name' : addressInfo === 'postalCode' ? 
+                'Postal Code' : 'City';
                 return (
-                    <>
+                    <div key={index}>
                     {index === 0 && <div>Address</div>}
                         <div className='input-fields'>
-                            <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label>
-                            <input type='text' value={selectedPerson.address[addressInfo]}/>
+                            <label htmlFor={label}>{`${label}: `}</label>
+                            <input type='text' defaultValue={selectedPerson.address[addressInfo]}/>
                         </div>
-                    </>
+                    </div>
                 )
             })
         )
@@ -117,16 +119,19 @@ export default function DetailModal(props) {
         <section className='modal' style={{backgroundColor: selectedPerson.favoriteColor}}>
             {isLoading && 
             <div className='indication'>Updating data...</div>}
+
             {isUpdateSuccess && 
             <section className='indication'>
                 <h3>Update success</h3>
                 <button onClick={() => setIsSelected(false)}>close</button>
             </section>}
+
             {errorMessage && 
             <section className='indication'>
-                <div>{errorMessage}</div>
+                <h3>{errorMessage}</h3>
                 <button onClick={() => setIsSelected(false)}>close</button>
             </section>}
+            
             <form className='modal-form'>
                 {
                     Object.keys(selectedPerson).map((property, index) => {
@@ -142,7 +147,7 @@ export default function DetailModal(props) {
                                             setBirthday,
                                             setFavoriteColor,
                                             setComment);
-                        const value = property === 'id' ? id : 
+                        const inputValue = property === 'id' ? id : 
                                     property === 'firstName' ? firstName :
                                     property === 'lastName' ? lastName : 
                                     property === 'favoriteBooks' ? favoriteBooks : 
@@ -154,28 +159,31 @@ export default function DetailModal(props) {
                                     property === 'comment' ? comment : 
                                     'No info';
                         return (
-                            <>
+                            <div key={index}>
                                 {property === 'address' ? 
                                 renderAddressInfo(attributeObj)
                                 :
                                 <div className='input-fields'>
-                                <label key={index} for={attributeObj.label}>{`${attributeObj.label}: `}</label>
+                                {/* <label key={index} htmlFor={attributeObj.label}>{`${attributeObj.label}: `}</label> */}
+                                <label htmlFor={attributeObj.label}>{`${attributeObj.label}: `}</label>
                                 {property === 'comment' ? 
                                 renderComment(attributeObj)
                                 :   
-                                renderPersonInfo(attributeObj, value)                             
+                                renderPersonInfo(attributeObj, inputValue)                             
                                 }
                                 {property === 'birthday' && 
                                 <div>{`${calculateAge()} years old`}</div>}
                                 </div>
                                 }
-                            </>
+                            </div>
                         )
                     })
                 }
-                <button onClick={updatePersonInfo}>Update</button>
-                <button onClick={deletePerson}>Delete</button>
-                <button onClick={handleCancelClick}>Cancel</button>
+                <div className='modal-buttons'>
+                    <button onClick={deletePerson} className='buttons' id='delete-button'>Delete</button>
+                    <button onClick={updatePersonInfo} className='buttons'>Update</button>
+                    <button onClick={handleCancelClick} className='buttons'>Cancel</button>
+                </div>
             </form>
       </section>
     </>

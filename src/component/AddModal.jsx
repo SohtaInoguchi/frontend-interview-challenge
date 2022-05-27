@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { fetchPersons, isInputValid, isEmailValid, delay, randomIdGenerator, switchAttribute } from '../helper/helper';
+import { fetchPersons, isformFilled, isEmailValid, delay, randomIdGenerator, switchAttribute } from '../helper/helper';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 import { PersonsContext } from '../App';
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
@@ -23,7 +23,6 @@ export default function AddModal(props) {
     const [comment, setComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [isUpdateSuccess, setIsUpdateSuccess] = useState(false);
 
     const handleOnChangeBooks = (book, index) => {
         const tempArr = favoriteBooks;
@@ -48,7 +47,7 @@ export default function AddModal(props) {
         try {
             setIsLoading(true);
             const newPerson = {};
-            if (isInputValid(
+            if (!isformFilled(
                 title,
                 firstName, 
                 lastName, 
@@ -60,10 +59,17 @@ export default function AddModal(props) {
                 postalCode,
                 favoriteColor,
                 favoriteBooks) 
-                && 
-                isEmailValid(email)
                 ) {
-                    console.log("valid input");
+                    alert("Please fill all the field besides Comment");
+                    setIsLoading(false);
+                    return;
+                }
+                else if (!isEmailValid(email)) {
+                    alert('Please enter valid email address');
+                    setIsLoading(false);
+                    return;        
+                }
+                else {
                     newPerson.id = randomIdGenerator();
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;
@@ -79,25 +85,12 @@ export default function AddModal(props) {
                                         postalCode: postalCode
                                         }
                     newPerson.comment = comment;
-                    console.log(newPerson);
                 }
-                else {
-                    alert("Please fill all the field besides Comment");
-                    console.log("input invalid");
-                    setIsLoading(false);
-                    return;
-                }
-                const response = await axios.post(`http://localhost:3000/persons`, newPerson);
-                const responsePersons = await axios.get('http://localhost:3000/persons');
-                await delay(2000);
-                if (response.statusText !== 'OK' || responsePersons.statusText !== 'OK') {
-                    console.log("in error if");
-                    throw Error('Something wend wrong...');
-                }
-                fetchPersons(setPersons, setErrorMessage, setIsLoading);
-                setIsLoading(false);
-                setIsAddedSuccess(true);
-                setAddClicked(false);
+            await delay(2000);
+            const response = await axios.post(`http://localhost:3000/persons`, newPerson);
+            fetchPersons(setPersons, setErrorMessage, setIsLoading);
+            setIsAddedSuccess(true);
+            setAddClicked(false);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
             setIsLoading(false);
@@ -108,23 +101,18 @@ export default function AddModal(props) {
   return (
     <>
       <section className='modal'>
-        {isLoading && <div className='indication'>Updating data...</div>}
-
-        {isUpdateSuccess && 
-        <section className='indication'>
-            <h3>Update success</h3>
-            <button onClick={() => setAddClicked(false)}>close</button>
-        </section>}
+        {isLoading && 
+        <section className='indication'>Updating data...</section>}
 
         {errorMessage && 
         <section className='indication'>
-            <div>{errorMessage}</div>
+            <h3>{errorMessage}</h3>
             <button onClick={() => setAddClicked(false)}>close</button>
         </section>}
     
         <form className='modal-form'>
             <div className='input-fields'>
-                <label for='title'>Title: </label>
+                <label htmlFor='title'>Title: </label>
                 <input 
                 type='text' 
                 value={title} 
@@ -134,7 +122,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='firstName'>First Name: </label>
+                <label htmlFor='firstName'>First Name: </label>
                 <input 
                 type='text' 
                 value={firstName} 
@@ -144,7 +132,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='lastName'>Last Name: </label>
+                <label htmlFor='lastName'>Last Name: </label>
                 <input 
                 type='text' 
                 value={lastName} 
@@ -154,7 +142,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='email'>email: </label>
+                <label htmlFor='email'>email: </label>
                 <input 
                 type='email' 
                 value={email} 
@@ -164,7 +152,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='gender'>Gender: </label>
+                <label htmlFor='gender'>Gender: </label>
                 <select name='gender' id='gender-input' onChange={(e) => setGender(e.target.value)}>
                     <option value=''>Please select your gender</option>
                     <option value='Male'>Male</option>
@@ -172,8 +160,9 @@ export default function AddModal(props) {
                     <option value='Genderfluid'>Genderfluid</option>
                 </select>
             </div>
+            <p>Address</p>
             <div className='input-fields'>
-                <label for='country'>Country: </label>
+                <label htmlFor='country'>Country: </label>
                 <input 
                 type='text' 
                 value={country} 
@@ -183,7 +172,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='streetName'>Street Name: </label>
+                <label htmlFor='streetName'>Street Name: </label>
                 <input 
                 type='text' 
                 value={streetName} 
@@ -193,7 +182,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='city'>City: </label>
+                <label htmlFor='city'>City: </label>
                 <input 
                 type='text' 
                 value={city} 
@@ -202,9 +191,8 @@ export default function AddModal(props) {
                 onChange={(e) => setCity(e.target.value)} 
                 required/>
             </div>
-
             <div className='input-fields'>
-                <label for='postalCode'>Postal code: </label>
+                <label htmlFor='postalCode'>Postal code: </label>
                 <input 
                 type='text' 
                 value={postalCode} 
@@ -213,12 +201,12 @@ export default function AddModal(props) {
                 onChange={(e) => setPostalCode(e.target.value)} 
                 required/>
             </div>
-
             <div>
-                <label for='favoriteBooks' className='input-fields-books'>Favorite books: </label>
+                <label htmlFor='favoriteBooks' className='input-fields-books'>Favorite books: </label>
                 {
                 favoriteBooks.map((book, index) => {
-                        return <input 
+                        return <input
+                                key={index} 
                                 type='text' 
                                 value={favoriteBooks[index]} 
                                 onChange={(e) => handleOnChangeBooks(e.target.value, index)}
@@ -228,9 +216,8 @@ export default function AddModal(props) {
                 }
                 <button onClick={addAnotherInput}>Add another book</button>            
             </div>
-
             <div className='input-fields'>
-                <label for='birthday'>Birthday: </label>
+                <label htmlFor='birthday'>Birthday: </label>
                 <input 
                 type='date' 
                 value={birthday} 
@@ -239,9 +226,8 @@ export default function AddModal(props) {
                 onChange={(e) => setBirthday(e.target.value)} 
                 required/>
             </div>
-
             <div className='input-fields'>
-                <label for='favoriteColor'>Favorite Color: </label>
+                <label htmlFor='favoriteColor'>Favorite Color: </label>
                 <input 
                 type='color' 
                 value={favoriteColor} 
@@ -250,21 +236,23 @@ export default function AddModal(props) {
                 onChange={(e) => setFavoriteColor(e.target.value)} 
                 required/>
             </div>
-
             <div className='input-fields'>
-                <label for='comment'>Comment: </label>
-                <input 
+                <label htmlFor='comment'>Comment: </label>
+                <textarea 
                 type='text' 
                 value={comment} 
                 id='comment'
                 name='comment' 
-                onChange={(e) => setComment(e.target.value)} 
-                />
+                onChange={(e) => setComment(e.target.value)}
+                rows='5' cols='30'>
+                    {comment}
+                </textarea>
             </div>
-            <button onClick={handleSubmit}>Add</button>
-            <button onClick={handleCancelClick}>Cancel</button>
+            <div className='add-modal-buttons'>
+                <button onClick={handleSubmit} className='buttons'>Add</button>
+                <button onClick={handleCancelClick} className='buttons'>Cancel</button>
+            </div>
         </form>
-
       </section>
     </>
   )
