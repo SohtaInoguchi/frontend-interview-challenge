@@ -79,7 +79,8 @@ export default function DetailModal(props) {
             id={attributeObj.label} 
             name={attributeObj.label}
             rows='5' cols='30'
-            defaultValue={selectedPerson.comment}>
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}>
             </textarea>
         )
     }
