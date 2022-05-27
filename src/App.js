@@ -21,8 +21,8 @@ function App() {
 
   return (
     <div className='wrapper'>
-      {errorMessage && <div className='initial-indication'>{errorMessage}</div>}
-      {isLoading && <div className='initial-indication'>Loading data...</div>}
+      {errorMessage && <section className='initial-indication'>{errorMessage}</section>}
+      {isLoading && <section className='initial-indication'>Loading data...</section>}
       {!isLoading && persons.length > 0 &&
       <PersonsContext.Provider value={personsContext}>
         <Table /> 

@@ -7,20 +7,12 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
       let page = 1;
       let response = await axios.get(`http://localhost:3000/persons?page=${page}`);
       let personsArr = response.data.results;
-      if (response.statusText !== 'OK') {
-        throw Error('Something went wrong...');
+      while (response.data.hasNextPage) {
+        page++;
+        response = await axios.get(`http://localhost:3000/persons?page=${page}`);
+        personsArr = personsArr.concat(response.data.results);
       }
-      else {
-        while (response.data.hasNextPage) {
-          page++;
-          response = await axios.get(`http://localhost:3000/persons?page=${page}`);
-          if (response.statusText !== 'OK') {
-            throw Error('Something went wrong...');
-          }
-          personsArr = personsArr.concat(response.data.results);
-        }
-        setPersons(personsArr);
-      }
+      setPersons(personsArr);
       setIsLoading(false);
     } catch (err) {
       setIsLoading(false);
@@ -29,7 +21,18 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
     }
   };
 
-  export const isInputValid = (title, firstName, lastName, birthday, gender, country, streetName, city, postalCode, favoriteColor, favoriteBooks) => {
+  export const isformFilled = (
+    title, 
+    firstName, 
+    lastName, 
+    birthday, 
+    gender, 
+    country, 
+    streetName, 
+    city, 
+    postalCode, 
+    favoriteColor, 
+    favoriteBooks) => {
     if (title.length > 1 && firstName && lastName && birthday && gender && country && streetName && city && postalCode && favoriteColor && favoriteBooks[0]) {
       return true;
     }
@@ -38,7 +41,6 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
 
   export const isEmailValid = (email) => {
     const mailFormat = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/
-    console.log(email.match(mailFormat));
     if (email.match(mailFormat)) {
       return true;
     }
@@ -48,7 +50,6 @@ export const fetchPersons = async (setPersons, setErrorMessage, setIsLoading) =>
   
   export const randomIdGenerator = () => {
     const randomNumber = Math.floor(Math.random() * 10000);
-    console.log(randomNumber);
     const id = `6ad313a7d${randomNumber}`;
     return id;
   }
