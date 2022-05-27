@@ -119,16 +119,19 @@ export default function DetailModal(props) {
         <section className='modal' style={{backgroundColor: selectedPerson.favoriteColor}}>
             {isLoading && 
             <div className='indication'>Updating data...</div>}
+
             {isUpdateSuccess && 
             <section className='indication'>
                 <h3>Update success</h3>
                 <button onClick={() => setIsSelected(false)}>close</button>
             </section>}
+
             {errorMessage && 
             <section className='indication'>
                 <div>{errorMessage}</div>
                 <button onClick={() => setIsSelected(false)}>close</button>
             </section>}
+            
             <form className='modal-form'>
                 {
                     Object.keys(selectedPerson).map((property, index) => {

@@ -101,11 +101,12 @@ export default function AddModal(props) {
   return (
     <>
       <section className='modal'>
-        {isLoading && <div className='indication'>Updating data...</div>}
+        {isLoading && 
+        <section className='indication'>Updating data...</section>}
 
         {errorMessage && 
         <section className='indication'>
-            <div>{errorMessage}</div>
+            <h3>{errorMessage}</h3>
             <button onClick={() => setAddClicked(false)}>close</button>
         </section>}
     
@@ -190,7 +191,6 @@ export default function AddModal(props) {
                 onChange={(e) => setCity(e.target.value)} 
                 required/>
             </div>
-
             <div className='input-fields'>
                 <label for='postalCode'>Postal code: </label>
                 <input 
@@ -201,7 +201,6 @@ export default function AddModal(props) {
                 onChange={(e) => setPostalCode(e.target.value)} 
                 required/>
             </div>
-
             <div>
                 <label for='favoriteBooks' className='input-fields-books'>Favorite books: </label>
                 {
@@ -216,7 +215,6 @@ export default function AddModal(props) {
                 }
                 <button onClick={addAnotherInput}>Add another book</button>            
             </div>
-
             <div className='input-fields'>
                 <label for='birthday'>Birthday: </label>
                 <input 
@@ -227,7 +225,6 @@ export default function AddModal(props) {
                 onChange={(e) => setBirthday(e.target.value)} 
                 required/>
             </div>
-
             <div className='input-fields'>
                 <label for='favoriteColor'>Favorite Color: </label>
                 <input 
@@ -238,7 +235,6 @@ export default function AddModal(props) {
                 onChange={(e) => setFavoriteColor(e.target.value)} 
                 required/>
             </div>
-
             <div className='input-fields'>
                 <label for='comment'>Comment: </label>
                 <textarea 
