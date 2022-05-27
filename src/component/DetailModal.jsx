@@ -78,8 +78,8 @@ export default function DetailModal(props) {
             <textarea 
             id={attributeObj.label} 
             name={attributeObj.label}
-            rows='5' cols='30'>
-                {selectedPerson.comment}
+            rows='5' cols='30'
+            defaultValue={selectedPerson.comment}>
             </textarea>
         )
     }
@@ -96,7 +96,8 @@ export default function DetailModal(props) {
                     {index === 0 && <div>Address</div>}
                         <div className='input-fields'>
                             <label key={index} htmlFor={label}>{`${label}: `}</label>
-                            <input type='text' value={selectedPerson.address[addressInfo]}/>
+                            {/* <input type='text' value={selectedPerson.address[addressInfo]}/> */}
+                            <input type='text' defaultValue={selectedPerson.address[addressInfo]}/>
                         </div>
                     </>
                 )

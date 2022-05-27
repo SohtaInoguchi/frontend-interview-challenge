@@ -45,7 +45,7 @@ export default function Table(props) {
             </thead>
             <tbody className='table-body'>
                 {persons.map(person => 
-                <tr onClick={(e) => getDetails(e)} id={person.id} className='table-rows'>
+                <tr onClick={(e) => getDetails(e)} key={person.id} id={person.id} className='table-rows'>
                     <td className='table-data'>{person.id}</td>
                     <td className='table-data'>{person.title}</td>
                     <td className='table-data'>{`${person.firstName} ${person.lastName}`}</td>
