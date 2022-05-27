@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
-import { fetchPersons, isInputValid, isEmailValid, delay, randomIdGenerator, switchAttribute } from '../helper/helper';
+import { fetchPersons, isformFilled, isEmailValid, delay, randomIdGenerator, switchAttribute } from '../helper/helper';
 import { keyboard } from '@testing-library/user-event/dist/keyboard';
 import { PersonsContext } from '../App';
 import { setSelectionRange } from '@testing-library/user-event/dist/utils';
@@ -47,7 +47,7 @@ export default function AddModal(props) {
         try {
             setIsLoading(true);
             const newPerson = {};
-            if (isInputValid(
+            if (!isformFilled(
                 title,
                 firstName, 
                 lastName, 
@@ -59,9 +59,17 @@ export default function AddModal(props) {
                 postalCode,
                 favoriteColor,
                 favoriteBooks) 
-                && 
-                isEmailValid(email)
                 ) {
+                    alert("Please fill all the field besides Comment");
+                    setIsLoading(false);
+                    return;
+                }
+                else if (!isEmailValid(email)) {
+                    alert('Please enter valid email address');
+                    setIsLoading(false);
+                    return;        
+                }
+                else {
                     newPerson.id = randomIdGenerator();
                     newPerson.firstName = firstName;
                     newPerson.lastName = lastName;
@@ -78,16 +86,11 @@ export default function AddModal(props) {
                                         }
                     newPerson.comment = comment;
                 }
-                else {
-                    alert("Please fill all the field besides Comment");
-                    setIsLoading(false);
-                    return;
-                }
-                await delay(2000);
-                const response = await axios.post(`http://localhost:3000/persons`, newPerson);
-                fetchPersons(setPersons, setErrorMessage, setIsLoading);
-                setIsAddedSuccess(true);
-                setAddClicked(false);
+            await delay(2000);
+            const response = await axios.post(`http://localhost:3000/persons`, newPerson);
+            fetchPersons(setPersons, setErrorMessage, setIsLoading);
+            setIsAddedSuccess(true);
+            setAddClicked(false);
         } catch (err) {
             console.error(`Error occurred: ${err}`);
             setIsLoading(false);
@@ -253,7 +256,6 @@ export default function AddModal(props) {
                 <button onClick={handleCancelClick} className='buttons'>Cancel</button>
             </div>
         </form>
-
       </section>
     </>
   )
