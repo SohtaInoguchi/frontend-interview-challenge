@@ -128,7 +128,7 @@ export default function DetailModal(props) {
 
             {errorMessage && 
             <section className='indication'>
-                <div>{errorMessage}</div>
+                <h3>{errorMessage}</h3>
                 <button onClick={() => setIsSelected(false)}>close</button>
             </section>}
             

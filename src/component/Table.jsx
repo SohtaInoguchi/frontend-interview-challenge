@@ -35,8 +35,13 @@ export default function Table(props) {
 
   return (
     <>
-    {errorMessage && <section className='indication'>{errorMessage}</section>}
-    {isLoading && <section className='indication'>Loading data...</section>}
+        {errorMessage && 
+        <section className='indication'>
+            <h3>{errorMessage}</h3>
+            <button onClick={() => setErrorMessage('')}>close</button>
+        </section>}
+
+        {isLoading && <section className='indication'>Loading data...</section>}
         <table id='persons-table'>
             <thead>
                 <tr>
