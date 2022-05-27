@@ -95,8 +95,7 @@ export default function DetailModal(props) {
                     <>
                     {index === 0 && <div>Address</div>}
                         <div className='input-fields'>
-                            {/* <label key={index} for={attributeObj.label}>{`${addressInfo}: `}</label> */}
-                            <label key={index} for={label}>{`${label}: `}</label>
+                            <label key={index} htmlFor={label}>{`${label}: `}</label>
                             <input type='text' value={selectedPerson.address[addressInfo]}/>
                         </div>
                     </>
@@ -164,7 +163,7 @@ export default function DetailModal(props) {
                                 renderAddressInfo(attributeObj)
                                 :
                                 <div className='input-fields'>
-                                <label key={index} for={attributeObj.label}>{`${attributeObj.label}: `}</label>
+                                <label key={index} htmlFor={attributeObj.label}>{`${attributeObj.label}: `}</label>
                                 {property === 'comment' ? 
                                 renderComment(attributeObj)
                                 :   

@@ -112,7 +112,7 @@ export default function AddModal(props) {
     
         <form className='modal-form'>
             <div className='input-fields'>
-                <label for='title'>Title: </label>
+                <label htmlFor='title'>Title: </label>
                 <input 
                 type='text' 
                 value={title} 
@@ -122,7 +122,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='firstName'>First Name: </label>
+                <label htmlFor='firstName'>First Name: </label>
                 <input 
                 type='text' 
                 value={firstName} 
@@ -132,7 +132,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='lastName'>Last Name: </label>
+                <label htmlFor='lastName'>Last Name: </label>
                 <input 
                 type='text' 
                 value={lastName} 
@@ -142,7 +142,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='email'>email: </label>
+                <label htmlFor='email'>email: </label>
                 <input 
                 type='email' 
                 value={email} 
@@ -152,7 +152,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='gender'>Gender: </label>
+                <label htmlFor='gender'>Gender: </label>
                 <select name='gender' id='gender-input' onChange={(e) => setGender(e.target.value)}>
                     <option value=''>Please select your gender</option>
                     <option value='Male'>Male</option>
@@ -162,7 +162,7 @@ export default function AddModal(props) {
             </div>
             <p>Address</p>
             <div className='input-fields'>
-                <label for='country'>Country: </label>
+                <label htmlFor='country'>Country: </label>
                 <input 
                 type='text' 
                 value={country} 
@@ -172,7 +172,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='streetName'>Street Name: </label>
+                <label htmlFor='streetName'>Street Name: </label>
                 <input 
                 type='text' 
                 value={streetName} 
@@ -182,7 +182,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='city'>City: </label>
+                <label htmlFor='city'>City: </label>
                 <input 
                 type='text' 
                 value={city} 
@@ -192,7 +192,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='postalCode'>Postal code: </label>
+                <label htmlFor='postalCode'>Postal code: </label>
                 <input 
                 type='text' 
                 value={postalCode} 
@@ -202,7 +202,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div>
-                <label for='favoriteBooks' className='input-fields-books'>Favorite books: </label>
+                <label htmlFor='favoriteBooks' className='input-fields-books'>Favorite books: </label>
                 {
                 favoriteBooks.map((book, index) => {
                         return <input 
@@ -216,7 +216,7 @@ export default function AddModal(props) {
                 <button onClick={addAnotherInput}>Add another book</button>            
             </div>
             <div className='input-fields'>
-                <label for='birthday'>Birthday: </label>
+                <label htmlFor='birthday'>Birthday: </label>
                 <input 
                 type='date' 
                 value={birthday} 
@@ -226,7 +226,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='favoriteColor'>Favorite Color: </label>
+                <label htmlFor='favoriteColor'>Favorite Color: </label>
                 <input 
                 type='color' 
                 value={favoriteColor} 
@@ -236,7 +236,7 @@ export default function AddModal(props) {
                 required/>
             </div>
             <div className='input-fields'>
-                <label for='comment'>Comment: </label>
+                <label htmlFor='comment'>Comment: </label>
                 <textarea 
                 type='text' 
                 value={comment} 

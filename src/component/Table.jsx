@@ -35,44 +35,44 @@ export default function Table(props) {
 
   return (
     <>
-    <table id='persons-table'>
-    {errorMessage && <div className='indication'>{errorMessage}</div>}
-    {isLoading && <div className='indication'>Loading data...</div>}
-        <thead>
-            <tr>
-                {headerNames.map((headerName, i) => <th key={i} className="table-headers">{headerName}</th>)}
-            </tr>
-        </thead>
-        <tbody className='table-body'>
-            {persons.map(person => 
-            <tr onClick={(e) => getDetails(e)} id={person.id} className='table-rows'>
-                <td className='table-data'>{person.id}</td>
-                <td className='table-data'>{person.title}</td>
-                <td className='table-data'>{`${person.firstName} ${person.lastName}`}</td>
-                <td className='table-data'>{person.email}</td>
-            </tr>)}
-        </tbody>
-    </table>
-    <IoMdAddCircle id='add-icon' onClick={() => setAddClicked(!isAddClicked)}/>
+    {errorMessage && <section className='indication'>{errorMessage}</section>}
+    {isLoading && <section className='indication'>Loading data...</section>}
+        <table id='persons-table'>
+            <thead>
+                <tr>
+                    {headerNames.map((headerName, i) => <th key={i} className="table-headers">{headerName}</th>)}
+                </tr>
+            </thead>
+            <tbody className='table-body'>
+                {persons.map(person => 
+                <tr onClick={(e) => getDetails(e)} id={person.id} className='table-rows'>
+                    <td className='table-data'>{person.id}</td>
+                    <td className='table-data'>{person.title}</td>
+                    <td className='table-data'>{`${person.firstName} ${person.lastName}`}</td>
+                    <td className='table-data'>{person.email}</td>
+                </tr>)}
+            </tbody>
+        </table>
+        <IoMdAddCircle id='add-icon' onClick={() => setAddClicked(!isAddClicked)}/>
 
-    {isAddedSuccess && 
-    <section className='indication'>
-        <h3>Update success</h3>
-        <button onClick={() => setIsAddedSuccess(false)}>close</button>
-    </section>}
+        {isAddedSuccess && 
+        <section className='indication'>
+            <h3>Update success</h3>
+            <button onClick={() => setIsAddedSuccess(false)}>close</button>
+        </section>}
 
-    {isAddClicked && 
-    <AddModal
-        selectedPerson={selectedPerson} 
-        setAddClicked={setAddClicked}
-        setIsAddedSuccess={setIsAddedSuccess}
-        isLoading={isLoading}    
-    />}
-    {!isLoading && isSelected &&
-    <DetailModal 
-        selectedPerson={selectedPerson} 
-        setIsSelected={setIsSelected}
-        isLoading={isLoading}
+        {isAddClicked && 
+        <AddModal
+            selectedPerson={selectedPerson} 
+            setAddClicked={setAddClicked}
+            setIsAddedSuccess={setIsAddedSuccess}
+            isLoading={isLoading}    
+        />}
+        {!isLoading && isSelected &&
+        <DetailModal 
+            selectedPerson={selectedPerson} 
+            setIsSelected={setIsSelected}
+            isLoading={isLoading}
         />}
     </>
   )
